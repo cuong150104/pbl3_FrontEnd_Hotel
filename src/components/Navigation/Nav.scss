@@ -1,0 +1,76 @@
+.top-nav {
+  overflow: hidden;
+  background-color: #333;
+
+  a {
+    float: left;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+  }
+
+  a:hover {
+    background-color: #ddd;
+    color: black;
+  }
+
+  a.active {
+    background-color: #04aa6d;
+    color: white;
+  }
+}
+
+.nav-header {
+  .brand {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .navbar-brand {
+    color: #000 !important;
+
+    img {
+      animation: App-logo-spin infinite 20s linear;
+    }
+
+    @keyframes App-logo-spin {
+      from {
+        transform: rotate(0deg);
+      }
+
+      to {
+        transform: rotate(360deg);
+      }
+    }
+  }
+
+  .navbar-nav {
+    a,
+    .nav-link {
+      color: #bfc0c0 !important;
+
+      &:hover {
+        color: #000 !important;
+      }
+    }
+
+    .nav-link.welcome {
+      color: #000 !important;
+    }
+  }
+
+  .nav-link {
+    &.active {
+      color: #000 !important;
+    }
+  }
+
+  .dropdown-menu {
+    a {
+      color: #212529 !important;
+    }
+  }
+}
