@@ -12,7 +12,7 @@ instance.defaults.withCredentials = true;
 // Alter defaults after instance has been created
 instance.defaults.headers.common[
   "Authorization"
-] = `Bearer ${localStorage.getItem("jwt")}`;
+] = `Bearer ${localStorage.getItem("pbl3_hotel")}`;
 
 // Add a request interceptor
 instance.interceptors.request.use(

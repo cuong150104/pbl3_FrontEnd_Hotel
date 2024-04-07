@@ -11,9 +11,11 @@ const Navbar = () => {
         <div className="navbar">
             <div className="navContainer">
 
+
                 <Link to="/" style={{ color: "inherit", textDecoration: "none" }}>
                     <span className="logo">booking.com</span>
                 </Link>
+
 
                 {user && user.isAuthenticated === true ? user.account.username : (
                     <div className="navItems">

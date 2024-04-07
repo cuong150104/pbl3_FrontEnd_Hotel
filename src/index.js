@@ -33,13 +33,13 @@ const Root = () => {
   let componentToRender;
   switch (group) {
     case '4':
-      componentToRender = <Client />;
+      componentToRender =  <App />;
       break;
     case '3':
       componentToRender = <Clinet />;
       break;
     default:
-       //componentToRender = <App />;
+  //componentToRender = <App />;
       componentToRender = <Client />;
       break;
   }

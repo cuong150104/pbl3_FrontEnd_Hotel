@@ -106,15 +106,15 @@ const Register = (props) => {
                     className="d-inline-block align-top me-3"
                     alt="Logo"
                   />
-                  <div className="brand__name my-3">JOBTOP</div>
+                  <div className="brand__name my-3">J</div>
                 </span>
               </Link>
             </div>
-            <div className="detail">Việc Làm Dành Cho Bạn</div>
+            <div className="detail">pagesClient</div>
           </div>
 
           <div className="content-right col-sm-5 col-12 d-flex flex-column gap-3 py-3">
-            <div className="brand d-sm-none">JOBTOP</div>
+            <div className="brand d-sm-none">Hotel</div>
             <div className="form-group">
               <label>Email:</label>
               <input

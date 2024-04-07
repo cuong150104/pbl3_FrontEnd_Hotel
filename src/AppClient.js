@@ -8,7 +8,7 @@ import AppRoutes from "./routes/AppRoutes";
 import { Rings } from "react-loader-spinner";
 import { UserContext } from "./context/UserContext";
 import Scrollbars, { ScrollbarProps } from "react-custom-scrollbars";
-import HomeClient from "./pages/Home/HomeClient"
+import HomeClient from "./pagesClient/Home/HomeClient"
 
 const AppClient = () => {
   const { user } = useContext(UserContext);

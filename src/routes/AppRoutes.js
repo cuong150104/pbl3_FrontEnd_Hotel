@@ -9,7 +9,7 @@ import GroupRole from "../components/GroupRole/GroupRole";
 
 const AppRoutes = (props) => {
   const Project = () => {
-    return <span>projects</span>;
+    return <span>Hotels</span>;
   };
   return (
     <>

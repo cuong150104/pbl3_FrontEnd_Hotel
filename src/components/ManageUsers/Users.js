@@ -163,8 +163,8 @@ const Users = (props) => {
               <ReactPaginate
                 nextLabel="next >"
                 onPageChange={handlePageClick}
-                pageRangeDisplayed={3}
-                marginPagesDisplayed={2}
+                pageRangeDisplayed={9}
+                marginPagesDisplayed={4}
                 pageCount={totalPages}
                 previousLabel="< previous"
                 pageClassName="page-item"

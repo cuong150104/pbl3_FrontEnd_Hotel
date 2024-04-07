@@ -22,7 +22,7 @@ const NavHeader = (props) => {
 
   const handleLogout = async () => {
     let data = await logoutUser(); // clear cookies
-    localStorage.removeItem("jwt"); // clear local storage
+    localStorage.removeItem("pbl3_hotel"); // clear local storage
     logoutContext(); // clear user in context
     if (data && +data.EC === 0) {
       toast.success("Logout succeeds...");
@@ -47,7 +47,7 @@ const NavHeader = (props) => {
                     className="d-inline-block align-top mx-3"
                     alt="Logo"
                   />
-                  <span className="brand-name">JOBTOP</span>
+                  <span className="brand-name">Hotel</span>
                 </h3>
               </Navbar.Brand>
               <Container>
@@ -57,6 +57,8 @@ const NavHeader = (props) => {
                     <NavLink to="/" exact className="nav-link">
                       Home
                     </NavLink>
+
+
                     <NavLink to="/users" className="nav-link">
                       Users
                     </NavLink>
@@ -67,7 +69,7 @@ const NavHeader = (props) => {
                       Group-Role
                     </NavLink>
                     <NavLink to="/projects" className="nav-link">
-                      Projects
+                      Hotels
                     </NavLink>
                     <NavLink to="/about" className="nav-link">
                       About
