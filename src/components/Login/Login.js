@@ -6,15 +6,22 @@ import { toast } from "react-toastify";
 import { loginUser } from "../../services/userService";
 import { UserContext } from "../../context/UserContext";
 import logo from "../../logo.png";
+import React from 'react';
+import ReactDOM from 'react-dom';
+import Root from '../../Root'; // Import Root component from Root.js
+import reportWebVitals from '../../reportWebVitals';
+const renderApp = () => {
+  ReactDOM.render(<Root />, document.getElementById('root'));
+};
 
 const Login = (props) => {
   const { user, loginContext } = useContext(UserContext);
-
- let history = useHistory();
+  let history = useHistory();
 
 
   const [valueLogin, setValueLogin] = useState("");
   const [password, setPassword] = useState("");
+  const [group, setGroup] = useState(null);
 
   const defaultObjValidInput = {
     isValidValueLogin: true,
@@ -51,7 +58,7 @@ const Login = (props) => {
       let email = response.DT.email;
       let username = response.DT.username;
       let token = response.DT.access_token;
-
+      let groupId = response.DT.groupWithRoles.id;
       let data = {
         isAuthenticated: true,
         token,
@@ -60,18 +67,24 @@ const Login = (props) => {
           email,
           username,
         },
+
       };
+      setGroup(groupId);
+
 
       localStorage.setItem("pbl3_hotel", token);
       loginContext(data);
-      history.push("/users");
-    }
 
+      history.push("/");
+
+    }
+    
     if (response && +response.EC !== 0) {
       // ERROR
       toast.error(response.EM);
     }
   };
+
 
   const handlePressEnter = (event) => {
     if (event.code === "Enter") {
@@ -81,17 +94,27 @@ const Login = (props) => {
 
   useEffect(() => {
     if (user && user.isAuthenticated) {
+      // history.push("/");
+
+      // renderApp();
+    
       history.push("/");
     }
-  }, []);
+    console.log(">>check log:   huhuh");
+      renderApp();
 
+  }, [group]);
+  const returnToHomePage = () => {
+    history.push("/");
+    window.location.reload();
+  };
   return (
     <div className="login-container">
       <div className="container">
         <div className="row px-3 px-sm-0">
           <div className="content-left col-12 d-none col-sm-7 d-sm-block">
             <div className="brand">
-              <Link to="/">
+              <Link to="/" >
                 <span title="Return to HomePage" className="brand-item">
                   <img
                     src={logo}
@@ -153,7 +176,7 @@ const Login = (props) => {
                 Create new account
               </button>
               <div className="mt-3 return">
-                <Link to="/">
+                <Link to="#" onClick={returnToHomePage}>
                   <i className="fa fa-arrow-circle-left"></i>
                   <span title="Return to HomePage"> Return to HomePage </span>
                 </Link>

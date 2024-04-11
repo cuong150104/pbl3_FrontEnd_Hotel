@@ -5,6 +5,7 @@ import Users from "../components/ManageUsers/Users";
 import PrivateRoutes from "./PrivateRoutes";
 import Role from "../components/Role/Role";
 import Home from "../components/Home/Home";
+import HomeClient from "../pagesClient/Home/HomeClient";
 import GroupRole from "../components/GroupRole/GroupRole";
 
 const AppRoutes = (props) => {
@@ -26,7 +27,8 @@ const AppRoutes = (props) => {
           <Register />
         </Route>
         <Route path="/" exact>
-          <Home />
+         <Home />
+         
         </Route>
         <Route path="*">404 Not Found</Route>
       </Switch>

@@ -4,6 +4,7 @@ import { getUserAccount } from "../services/userService";
 
 const UserContext = React.createContext(null);// trạng thái tài khoản
 
+
 const UserProvider = ({ children }) => {
   const userDefault = {
     isLoading: true,
@@ -26,6 +27,7 @@ const UserProvider = ({ children }) => {
   };
 
   const fetchUSer = async () => {
+   
     let response = await getUserAccount();
     if (response && response.EC === 0) {
       let groupWithRoles = response.DT.groupWithRoles;
@@ -54,7 +56,7 @@ const UserProvider = ({ children }) => {
   }, []);
 
   return (
-    <UserContext.Provider value={{ user, loginContext, logoutContext }}>
+    <UserContext.Provider value={{ user, loginContext, logoutContext, fetchUSer }}>
       {children}
     </UserContext.Provider>
   );

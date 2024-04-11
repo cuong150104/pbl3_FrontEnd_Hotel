@@ -9,7 +9,7 @@ import { Rings } from "react-loader-spinner";
 import { UserContext } from "./context/UserContext";
 import Scrollbars, { ScrollbarProps } from "react-custom-scrollbars";
 import HomeClient from "./pagesClient/Home/HomeClient"
-
+import ClientRoutes from "./routes/ClientRoutes";
 const AppClient = () => {
   const { user } = useContext(UserContext);
   const [scrollHeight, setScrollHeight] = useState(0);
@@ -23,7 +23,7 @@ const AppClient = () => {
     <Scrollbars autoHide style={{ height: scrollHeight }}>
       <Router>
         <div className="app-header">
-          <HomeClient />
+          <ClientRoutes />
         </div>
       </Router>
       <ToastContainer

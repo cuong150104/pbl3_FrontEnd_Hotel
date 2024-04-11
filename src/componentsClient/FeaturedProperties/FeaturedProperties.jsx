@@ -26,24 +26,26 @@ const FeaturedProperties = () => {
   const list = listHotels.length;
   return (
     <div className="fp">
-    
+
       {listHotels && listHotels.length > 0 ? (
         <>
-          {listHotels.map((item, index) => {
+          {listHotels.slice(0, 5).map((item, index) => {
+
             return (
               <div className="fpItem" key={item.id}>
                 <img
-                 src = {JSON.parse(item.photos)[0]}
-                 alt="loi"
+                  src={JSON.parse(item.photos)[0]}
+                  alt="loi"
                   className="fpImg"
                 />
+
                 <span className="fpName">{item.name}</span>
                 <span className="fpCity">{item.city}</span>
                 <span className="fpPrice">Starting from ${item.cheapest_price}</span>
                 {item.rating && <div className="fpRating">
-              <button>{item.rating}</button>
-              <span>Excellent</span>
-            </div>}
+                  <button>{item.rating}</button>
+                  <span>Excellent</span>
+                </div>}
               </div>
 
             );
@@ -60,7 +62,7 @@ const FeaturedProperties = () => {
           </div>
         </>
       )}
-  
+
     </div>
   );
 };
