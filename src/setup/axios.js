@@ -38,7 +38,11 @@ instance.interceptors.response.use(
     // Do something with response error
     const status = (error && error.response && error.response.status) || 500;
     switch (status) {
+      case 200:{ // Hoặc 204, tùy thuộc vào mã trạng thái trả về từ server
+        // Xử lý trường hợp người dùng không cần đăng nhập
+        return error.response.data;
       // authentication (token related issues)
+      }
       case 401: {
         if (
           window.location.pathname !== "/" &&

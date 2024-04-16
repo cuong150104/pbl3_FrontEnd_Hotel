@@ -1,4 +1,4 @@
-import { fetchGroup } from "../../services/userService";
+import { fetchGroup } from "../../servicesAdmin/userService";
 import { useState, useEffect } from "react";
 import "./GroupRole.scss";
 import { toast } from "react-toastify";
@@ -6,7 +6,7 @@ import {
   fetchAllRoles,
   fetchRolesByGroup,
   assignRolesToGroup,
-} from "../../services/roleService";
+} from "../../servicesAdmin/roleService";
 import _, { cloneDeep } from "lodash";
 
 const GroupRole = () => {
@@ -104,7 +104,7 @@ const GroupRole = () => {
     let res = await assignRolesToGroup(data);
     if (res && res.EC === 0) {
       toast.success(res.EM);
-    }else{
+    } else {
       toast.error(res.EM);
     }
   };

@@ -40,30 +40,15 @@
 
 .headerBtn {
   background-color: #0071c2;
-  /* Màu nền của button */
   color: white;
-  /* Màu chữ */
   font-weight: 500;
-  /* Độ đậm của chữ */
   border: none;
-  /* Không có viền */
-  padding: 10px 20px;
-  /* Khoảng cách padding */
+  padding: 10px;
   cursor: pointer;
-  /* Con trỏ khi di chuột qua */
-  border-radius: 5px;
-  /* Bo tròn góc */
-  transition: background-color 0.3s ease;
-  /* Hiệu ứng chuyển đổi màu nền */
-}
-
-.headerBtn:hover {
-  background-color: #005192;
-  /* Màu nền khi di chuột qua */
 }
 
 .headerSearch {
-  height: 43px;
+  height: 30px;
   background-color: white;
   border: 3px solid #febb02;
   display: flex;

@@ -5,7 +5,7 @@ import {
   fetchGroup,
   createNewUser,
   updateCurrentUser,
-} from "../../services/userService";
+} from "../../servicesAdmin/userService";
 import { toast } from "react-toastify";
 import _ from "lodash";
 
@@ -104,13 +104,13 @@ const ModalUser = (props) => {
       let res =
         action === "Create"
           ? await createNewUser({
-              ...userData,
-              groupId: userData["group"],
-            })
+            ...userData,
+            groupId: userData["group"],
+          })
           : await updateCurrentUser({
-              ...userData,
-              groupId: userData["group"],
-            });
+            ...userData,
+            groupId: userData["group"],
+          });
       if (res && res.EC === 0) {
         props.onHide();
         setUserData({

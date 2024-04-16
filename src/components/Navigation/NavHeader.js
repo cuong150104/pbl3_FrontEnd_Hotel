@@ -12,7 +12,7 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import logo from "../../logo.png";
-import { logoutUser } from "../../services/userService";
+import { logoutUser } from "../../servicesAdmin/userService";
 import { toast } from "react-toastify";
 
 const NavHeader = (props) => {

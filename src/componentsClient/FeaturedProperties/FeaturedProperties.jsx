@@ -1,6 +1,6 @@
 //import useFetch from "../../hooks/useFetch";
 import "./FeaturedProperties.scss";
-import fetchAllHotel from "../../servicesClient/hotelService"
+import {fetchAllHotel} from "../../servicesClient/hotelService"
 import { useEffect, useState } from "react";
 
 const FeaturedProperties = () => {
@@ -15,7 +15,7 @@ const FeaturedProperties = () => {
     let response = await fetchAllHotel(2, 1);
 
     if (response && response.EC === 0) {
-      console.log(response.DT);
+      // console.log(response.DT);
 
       setListHotels(response.DT);
 

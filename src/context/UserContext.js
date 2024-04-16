@@ -1,6 +1,6 @@
 //xác thực người dung và dữ liệu tài khoản 
 import React, { useState, useEffect } from "react";
-import { getUserAccount } from "../services/userService";
+import { getUserAccount } from "../servicesAdmin/userService";
 
 const UserContext = React.createContext(null);// trạng thái tài khoản
 
@@ -27,7 +27,7 @@ const UserProvider = ({ children }) => {
   };
 
   const fetchUSer = async () => {
-   
+
     let response = await getUserAccount();
     if (response && response.EC === 0) {
       let groupWithRoles = response.DT.groupWithRoles;

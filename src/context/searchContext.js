@@ -10,15 +10,18 @@ const INITIAL_STATE = {
   },
 };
 
-export const SearchContext = createContext(INITIAL_STATE);
+export const searchContext = createContext(INITIAL_STATE);
 
 const SearchReducer = (state, action) => {
   switch (action.type) {
     case "NEW_SEARCH":
+      console.log("chekk case");
       return action.payload;
     case "RESET_SEARCH":
+      console.log("chekk case reset");
       return INITIAL_STATE;
     default:
+      console.log("chekk case defau");
       return state;
   }
 };
@@ -27,16 +30,17 @@ export const SearchContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(SearchReducer, INITIAL_STATE);
 
   return (
-    <SearchContext.Provider
+    <searchContext.Provider
       value={{
         city: state.city,
         dates: state.dates,
         options: state.options,
+        state,
         dispatch,
       }}
     >
       {children}
-    </SearchContext.Provider>
+    </searchContext.Provider>
   );
 };
 

@@ -1,5 +1,5 @@
 import { useEffect, useState, forwardRef, useImperativeHandle } from "react";
-import { fetchAllRoles, deleteRole } from "../../services/roleService";
+import { fetchAllRoles, deleteRole } from "../../servicesAdmin/roleService";
 import { toast } from "react-toastify";
 
 const TableRoles = forwardRef((props, ref) => {

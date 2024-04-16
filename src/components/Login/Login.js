@@ -3,16 +3,16 @@ import "./Login.scss";
 import { useHistory, Link } from "react-router-dom";
 
 import { toast } from "react-toastify";
-import { loginUser } from "../../services/userService";
+import { loginUser } from "../../servicesAdmin/userService";
 import { UserContext } from "../../context/UserContext";
 import logo from "../../logo.png";
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Root from '../../Root'; // Import Root component from Root.js
+// import Root from '../../Root'; // Import Root component from Root.js
 import reportWebVitals from '../../reportWebVitals';
-const renderApp = () => {
-  ReactDOM.render(<Root />, document.getElementById('root'));
-};
+// const renderApp = () => {
+//   ReactDOM.render(<Root />, document.getElementById('root'));
+// };
 
 const Login = (props) => {
   const { user, loginContext } = useContext(UserContext);
@@ -78,7 +78,7 @@ const Login = (props) => {
       history.push("/");
 
     }
-    
+
     if (response && +response.EC !== 0) {
       // ERROR
       toast.error(response.EM);
@@ -97,11 +97,11 @@ const Login = (props) => {
       // history.push("/");
 
       // renderApp();
-    
+
       history.push("/");
     }
-    console.log(">>check log:   huhuh");
-      renderApp();
+    // console.log(">>check log:   huhuh");
+    //   renderApp();
 
   }, [group]);
   const returnToHomePage = () => {
