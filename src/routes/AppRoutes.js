@@ -4,9 +4,10 @@ import Register from "../components/Register/Register";
 import Users from "../components/ManageUsers/Users";
 import PrivateRoutes from "./PrivateRoutes";
 import Role from "../components/Role/Role";
-import Home from "../components/Home/Home";
-import HomeClient from "../pagesClient/Home/HomeClient";
+// import Home from "../components/Home/Home";
+import HomeAdmin from "../pagesAdmin/Home/Home"
 import GroupRole from "../components/GroupRole/GroupRole";
+import Hotels from "../components/ManageHotels/Hotels";
 
 const AppRoutes = (props) => {
   const Project = () => {
@@ -19,6 +20,7 @@ const AppRoutes = (props) => {
         <PrivateRoutes path="/projects" component={Project} />
         <PrivateRoutes path="/roles" component={Role} />
         <PrivateRoutes path="/group-role" component={GroupRole} />
+        <PrivateRoutes path="/hotels" component={Hotels} />
 
         <Route path="/login">
           <Login />
@@ -27,7 +29,8 @@ const AppRoutes = (props) => {
           <Register />
         </Route>
         <Route path="/" exact>
-         <Home />
+         {/* <Home /> */}
+         <HomeAdmin />
          
         </Route>
         <Route path="*">404 Not Found</Route>

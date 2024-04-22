@@ -1,4 +1,4 @@
-import "./App.scss";
+import "./AppAdmin.scss";
 import NavHeader from "./components/Navigation/NavHeader";
 //import { BrowserRouter as Router } from "react-router-dom";
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';

@@ -74,8 +74,9 @@ const Login = (props) => {
 
       localStorage.setItem("pbl3_hotel", token);
       loginContext(data);
-
+      
       history.push("/");
+      window.location.reload();
 
     }
 
@@ -89,6 +90,7 @@ const Login = (props) => {
   const handlePressEnter = (event) => {
     if (event.code === "Enter") {
       handleLogin();
+      
     }
   };
 

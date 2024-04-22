@@ -66,9 +66,8 @@
 
 import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
-import Client from './AppClient';
-import Clinet from './AppClient';
+import AppAdmin from './AppAdmin';
+import AppClient from './AppClient';
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'font-awesome/css/font-awesome.min.css';
@@ -99,14 +98,14 @@ const Root = () => {
   let componentToRender;
   switch (group) {
     case 1:
-      componentToRender = <App />;
+      componentToRender = <AppAdmin />;
       break;
     case 4:
-      componentToRender = <Clinet />;
+      componentToRender = <AppClient />;
       break;
     default:
-      //componentToRender = <App />;
-      componentToRender = <Client />;
+      //componentToRender = <AppAdmin />;
+      componentToRender = <AppClient />;
       break;
   }
 

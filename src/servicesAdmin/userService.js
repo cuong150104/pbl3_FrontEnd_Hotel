@@ -50,6 +50,8 @@ const logoutUser = () => {
   return axios.post("/api/v1/logout");
 };
 
+
+
 export {
   registerNewUser,
   loginUser,
@@ -60,4 +62,5 @@ export {
   updateCurrentUser,
   getUserAccount,
   logoutUser,
+
 };

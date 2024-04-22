@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import "./Nav.scss";
+import "./NavHeader.scss";
 import {
   Link,
   NavLink,
@@ -14,7 +14,8 @@ import NavDropdown from "react-bootstrap/NavDropdown";
 import logo from "../../logo.png";
 import { logoutUser } from "../../servicesAdmin/userService";
 import { toast } from "react-toastify";
-
+import { dropRight } from "lodash";
+import { Dropdown } from "bootstrap";
 const NavHeader = (props) => {
   const { user, logoutContext } = useContext(UserContext);
   const location = useLocation();
@@ -36,8 +37,9 @@ const NavHeader = (props) => {
     return (
       <>
         <div className="navbar-light bg-light">
-          <div className="nav-header container">
+          <div className="nav-header ">
             <Navbar expand="lg" className="bg-body-tertiary" bg="header">
+             
               <Navbar.Brand href="#home">
                 <h3 className="brand">
                   <img
@@ -68,9 +70,12 @@ const NavHeader = (props) => {
                     <NavLink to="/group-role" className="nav-link">
                       Group-Role
                     </NavLink>
-                    <NavLink to="/projects" className="nav-link">
+                    <NavLink to="/hotels" className="nav-link">
                       Hotels
                     </NavLink>
+                    {/* <NavLink to="/projects" className="nav-link">
+                      Hotels
+                    </NavLink> */}
                     <NavLink to="/about" className="nav-link">
                       About
                     </NavLink>

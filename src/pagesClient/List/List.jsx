@@ -20,13 +20,13 @@ const List = () => {
 
   const { data, loading, error, reFetch } = useFetch(
     `/api/v2/hotels/read?city=${destination}&min=${min || 0 }&max=${max || 999}`
-    // `/hotels?city=${destination}&min=${min || 0 }&max=${max || 999}`
+   
   );
 
   const handleClick = () => {
     reFetch();
   };
-  // console.log(">>> check Data:", data); 
+  console.log(">>> check Data  lsist:", data); 
   return (
     <div>
       <Navbar />

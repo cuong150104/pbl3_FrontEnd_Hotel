@@ -12,7 +12,7 @@ const useFetch = (url) => {
       try {
         const res = await axios.get(url);
         setData(res.DT);
-        console.log(">>check data1: ", res.DT);
+        // console.log(">>check data1: ", res.DT);
        
       } catch (err) {
         setError(err);
@@ -20,7 +20,7 @@ const useFetch = (url) => {
       setLoading(false);
     };
     fetchData();
-  }, [url]);
+  }, []);
 
   const reFetch = async () => {
     setLoading(true);

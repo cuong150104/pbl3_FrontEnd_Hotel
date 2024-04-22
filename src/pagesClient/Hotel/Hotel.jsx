@@ -34,7 +34,7 @@ const Hotel = () => {
   
   console.log(">>check dates: ", dates);
   //const { dates, options } = useContext(searchContext);
-  console.log(">>check data hotel", data);
+  // console.log(">>check data hotel", data);
 
   // const { state } = useContext(searchContext);
   // console.log(">>check date hotel+++", state);
@@ -173,7 +173,7 @@ const Hotel = () => {
           <Footer />
         </div>
       )}
-      {/* {openModal && <Reserve setOpen={setOpenModal} hotelId={id} />} */}
+      {openModal && <Reserve setOpen={setOpenModal} hotelId={id} />}
     </div>
   );
 };
