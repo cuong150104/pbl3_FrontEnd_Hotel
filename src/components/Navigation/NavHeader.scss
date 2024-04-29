@@ -23,6 +23,12 @@
 }
 
 .nav-header {
+  .bg-body-tertiary{
+    height: 60px;
+    background-color: hsl(207, 87%, 25%);
+    display: flex;
+    justify-content: center;
+  }
   .brand {
     display: flex;
     justify-content: center;
@@ -33,7 +39,7 @@
     color: #000 !important;
 
     img {
-      animation: App-logo-spin infinite 20s linear;
+     // animation: App-logo-spin infinite 20s linear;
     }
 
     @keyframes App-logo-spin {
@@ -76,7 +82,7 @@
   .navbar-nav {
     a,
     .nav-link {
-      color: hwb(0 0% 100%) !important;
+      color: hwb(0 90% 9%) !important;
 
       &:hover {
         color: hsl(99, 76%, 45%) !important;
@@ -98,7 +104,7 @@
 
   .dropdown-menu {
     a {
-      color: hsla(210, 34%, 23%, 0.258) !important;
+      color: hwb(208 86% 9% / 0.897) !important;
     }
   }
 }

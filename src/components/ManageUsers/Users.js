@@ -9,7 +9,7 @@ import ModalUser from "./ModalUser";
 const Users = (props) => {
   const [listUsers, setListUsers] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [currentLimit, setCurrentLimit] = useState(2);
+  const [currentLimit, setCurrentLimit] = useState(4);
   const [totalPages, setTotalPages] = useState(0);
   // modal delete
   const [isShowModalDelete, setIsShowModalDelete] = useState(false);

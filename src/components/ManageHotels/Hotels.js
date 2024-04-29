@@ -1,16 +1,16 @@
 import { useEffect, useState } from "react";
 import "./Hotels.scss";
-// import { fetchAllHotel, deleteUser } from "../../servicesAdmin/userService";
-import {fetchAllHotels} from "../../servicesAdmin/hotelService";
+import { fetchAllHotel, deleteHotel } from "../../servicesAdmin/hotelService";
+import { fetchAllHotels } from "../../servicesAdmin/hotelService";
 import ReactPaginate from "react-paginate";
 import { toast } from "react-toastify";
 import ModalDelete from "./ModalDelete";
-import ModalUser from "./ModalHotel";
+import ModalHotel from "./ModalHotel";
 
 const Users = (props) => {
   const [listUsers, setListUsers] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [currentLimit, setCurrentLimit] = useState(2);
+  const [currentLimit, setCurrentLimit] = useState(4);
   const [totalPages, setTotalPages] = useState(0);
   // modal delete
   const [isShowModalDelete, setIsShowModalDelete] = useState(false);
@@ -48,29 +48,29 @@ const Users = (props) => {
     setDataModal({});
   };
 
-//   const confirmDeleteUser = async () => {
-//     let response = await deleteUser(dataModal);
-//     console.log(">>Check response: ", response);
-//     if (response && response.EC === 0) {
-//       toast.success(response.EM);
-//       await fetchUsers();
-//       setIsShowModalDelete(false);
-//     } else {
-//       toast.error(response.EM);
-//     }
-//   };
+    const confirmDeleteUser = async () => {
+      let response = await deleteHotel(dataModal);
+      console.log(">>Check response: ", response);
+      if (response && response.EC === 0) {
+        toast.success(response.EM);
+        await fetchUsers();
+        setIsShowModalDelete(false);
+      } else {
+        toast.error(response.EM);
+      }
+    };
 
-//   const onHideModalUser = async () => {
-//     setIsShowModalUser(false);
-//     setDataModalUser({});
-//     await fetchUsers();
-//   };
+  const onHideModalHotel = async () => {
+    setIsShowModalUser(false);
+    setDataModalUser({});
+    await fetchUsers();
+  };
 
-//   const handleEditUser = (user) => {
-//     setActionModalUser("UPDATE");
-//     setDataModalUser(user);
-//     setIsShowModalUser(true);
-//   };
+  const handleEditUser = (user) => {
+    setActionModalUser("UPDATE");
+    setDataModalUser(user);
+    setIsShowModalUser(true);
+  };
 
   const handleRefresh = async () => {
     await fetchUsers();
@@ -95,12 +95,12 @@ const Users = (props) => {
               <button
                 className="btn btn-primary"
                 onClick={() => {
-                //   setIsShowModalUser(true);
-                //   setActionModalUser("CREATE");
+                  setIsShowModalUser(true);
+                  setActionModalUser("CREATE");
                 }}
               >
                 <i class="fa fa-plus-circle"></i>
-                Add New User
+                Add New Hotel
               </button>
             </div>
           </div>
@@ -129,19 +129,19 @@ const Users = (props) => {
                           <td>{item.name}</td>
                           <td>{item.type}</td>
                           <td>{item.phone}</td>
-                          
+
                           <td>
                             <span
                               title="Edit"
                               className="edit"
-                            //   onClick={() => handleEditUser(item)}
+                              onClick={() => handleEditUser(item)}
                             >
                               <i className="fa fa-pencil"></i>
                             </span>
                             <span
                               title="Delete"
                               className="delete"
-                            //   onClick={() => handleDeleteUser(item)}
+                              onClick={() => handleDeleteUser(item)}
                             >
                               <i class="fa fa-trash"></i>
                             </span>
@@ -190,13 +190,13 @@ const Users = (props) => {
       <ModalDelete
         show={isShowModalDelete}
         handleClose={handleClose}
-        // confirmDeleteUser={confirmDeleteUser}
+       confirmDeleteUser={confirmDeleteUser}
         dataModal={dataModal}
       />
 
-      <ModalUser
+      <ModalHotel
         show={isShowModalUser}
-        // onHide={onHideModalUser}
+        onHide={onHideModalHotel}
         action={actionModalUser}
         dataModalUser={dataModalUser}
       />

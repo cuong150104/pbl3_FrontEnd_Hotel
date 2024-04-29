@@ -1,89 +1,103 @@
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import { useState, useEffect } from "react";
+// import {
+//   fetchGroup,
+//   createNewUser,
+//   updateCurrentUser,
+// } from "../../servicesAdmin/userService";
+
 import {
-  fetchGroup,
-  createNewUser,
-  updateCurrentUser,
-} from "../../servicesAdmin/userService";
+  createNewHotel,
+  updateCurrentHotel,
+} from "../../servicesAdmin/hotelService";
+
 import { toast } from "react-toastify";
 import _ from "lodash";
 
-const ModalUser = (props) => {
-  const { action, dataModalUser } = props;
-  const defaultUserData = {
-    email: "",
-    phone: "",
-    username: "",
-    password: "",
+const ModalHotel = (props) => {
+  const { action, dataModalHotel } = props;
+  const defaultHotelData = {
+    category: "",
+    name: "",
+    type: "",
+    city: "",
     address: "",
-    sex: "",
-    group: "",
+    description: "",
+    phone: "",
+    country: "",
+    photos: [],
+    rating: "",
+    cheapestPrice: "",
   };
 
   const validInputsDefault = {
-    email: true,
-    phone: true,
-    username: true,
-    password: true,
+    category: true,
+    name: true,
+    type: true,
+    city: true,
     address: true,
-    sex: true,
-    group: true,
+    description: true,
+    phone: true,
+    country: true,
+    photos: true,
+    rating: true,
+    cheapestPrice: true,
   };
 
-  const [userData, setUserData] = useState(defaultUserData);
+  const [hotelData, setHotelData] = useState(defaultHotelData);
   const [validInputs, setValidInputs] = useState(validInputsDefault);
 
   const [userGroups, setUserGroups] = useState([]);
 
-  useEffect(() => {
-    getGroups();
-  }, []);
+  // useEffect(() => {
+  //   getGroups();
+  // }, []);
 
   useEffect(() => {
     if (action === "UPDATE") {
-      setUserData({
-        ...dataModalUser,
-        group: dataModalUser.Group ? dataModalUser.Group.id : "",
+      setHotelData({
+        ...dataModalHotel,
+        group: dataModalHotel.Group ? dataModalHotel.Group.id : "",
       });
     }
-  }, [dataModalUser]);
+  }, [dataModalHotel]);
 
   useEffect(() => {
     if (action === "CREATE") {
       if (userGroups && userGroups.length > 0) {
-        setUserData({ ...userData, group: userGroups[0].id });
+        setHotelData({ ...hotelData, group: userGroups[0].id });
       }
     }
   }, [action]);
 
-  const getGroups = async () => {
-    let res = await fetchGroup();
-    if (res && res.EC === 0) {
-      setUserGroups(res.DT);
-      if (res.DT && res.DT.length > 0) {
-        let groups = res.DT;
-        setUserData({ ...userData, group: groups[0].id });
-      }
-    } else {
-      toast.error(res.EM);
-    }
-  };
+  // const getGroups = async () => {
+  //   let res = await fetchGroup();
+  //   if (res && res.EC === 0) {
+  //     setUserGroups(res.DT);
+  //     if (res.DT && res.DT.length > 0) {
+  //       let groups = res.DT;
+  //       setHotelData({ ...hotelData, group: groups[0].id });
+  //     }
+  //   } else {
+  //     toast.error(res.EM);
+  //   }
+  // };
 
   const handleOnChangeInput = (value, name) => {
-    let _userData = _.cloneDeep(userData);
-    _userData[name] = value;
-    setUserData(_userData);
+    let _hotelData = _.cloneDeep(hotelData);
+    _hotelData[name] = value;
+    setHotelData(_hotelData);
   };
 
   const checkValidateInputs = () => {
-    // create user
+    // create hotel
     if (action === "UPDATE") return true;
     setValidInputs(validInputsDefault);
-    let arr = ["email", "phone", "password", "group"];
+    let arr = ["name", "phone", "photos", "group"];
     let check = true;
     for (let i = 0; i < arr.length; i++) {
-      if (!userData[arr[i]]) {
+      if (!hotelData[arr[i]]) {
         let _validInputs = _.cloneDeep(validInputsDefault);
         _validInputs[arr[i]] = false;
         setValidInputs(_validInputs);
@@ -97,25 +111,25 @@ const ModalUser = (props) => {
     return check;
   };
 
-  const handleConfirmUser = async () => {
-    // create user
-    let check = checkValidateInputs();
+  const handleConfirmHotel = async () => {
+    // create hotel
+    // let check = checkValidateInputs();
+    let check = true;
+    console.log(">> check create hotel: ", hotelData);
     if (check === true) {
       let res =
         action === "CREATE"
-          ? await createNewUser({
-              ...userData,
-              groupId: userData["group"],
-            })
-          : await updateCurrentUser({
-              ...userData,
-              groupId: userData["group"],
-            });
+          ? await createNewHotel({
+            ...hotelData,
+            // photos: hotelData.photos.length === 0 ? '[]' : JSON.stringify(hotelData.photos)
+          })
+          : await updateCurrentHotel({
+            ...hotelData,
+          });
       if (res && res.EC === 0) {
         props.onHide();
-        setUserData({
-          ...defaultUserData,
-          group: userGroups && userGroups.length > 0 ? userGroups[0].id : "",
+        setHotelData({
+          ...defaultHotelData,
         });
         toast.success("UPDATE success");
       } else {
@@ -128,9 +142,9 @@ const ModalUser = (props) => {
     }
   };
 
-  const handleCloseModalUser = () => {
+  const handleCloseModalHotel = () => {
     props.onHide();
-    setUserData(defaultUserData);
+    setHotelData(defaultHotelData);
     setValidInputs(validInputsDefault);
   };
 
@@ -139,13 +153,13 @@ const ModalUser = (props) => {
       <Modal
         size="lg"
         show={props.show}
-        className="modal-user"
-        onHide={() => handleCloseModalUser()}
+        className="modal-hotel"
+        onHide={() => handleCloseModalHotel()}
       >
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter">
             <span>
-              {props.action === "CREATE" ? "Create new user" : "Edit a user"}
+              {props.action === "CREATE" ? "Create new hotel" : "Edit a hotel"}
             </span>
           </Modal.Title>
         </Modal.Header>
@@ -153,31 +167,51 @@ const ModalUser = (props) => {
           <div className="content-body row">
             <div className="col-12 col-sm-6 form-group">
               <label>
-                Email Address (<span className="red">*</span>):
+                Name Hotel (<span className="red">*</span>):
               </label>
               <input
-                disabled={action === "CREATE" ? false : true}
-                className={
-                  validInputs.email ? "form-control" : "form-control is-invalid"
-                }
-                type="email"
-                value={userData.email}
+                className="form-control"
+                type="text"
+                value={hotelData.name}
                 onChange={(event) =>
-                  handleOnChangeInput(event.target.value, "email")
+                  handleOnChangeInput(event.target.value, "name")
                 }
               />
             </div>
             <div className="col-12 col-sm-6 form-group">
               <label>
-                Phone Number (<span className="red">*</span>):
+                City :
               </label>
               <input
-                disabled={action === "CREATE" ? false : true}
-                className={
-                  validInputs.phone ? "form-control" : "form-control is-invalid"
-                }
+                className="form-control"
                 type="text"
-                value={userData.phone}
+                value={hotelData.city}
+                onChange={(event) =>
+                  handleOnChangeInput(event.target.value, "city")
+                }
+              />
+            </div>
+            <div className="col-12 col-sm-6 form-group">
+              <label>
+                Rating:
+              </label>
+              <input
+                className="form-control"
+                type="text"
+                value={hotelData.rating}
+                onChange={(event) =>
+                  handleOnChangeInput(event.target.value, "rating")
+                }
+              />
+            </div>
+            <div className="col-12 col-sm-6 form-group">
+              <label>
+                Phone Number:
+              </label>
+              <input
+                className="form-control"
+                type="text"
+                value={hotelData.phone}
                 onChange={(event) =>
                   handleOnChangeInput(event.target.value, "phone")
                 }
@@ -185,96 +219,93 @@ const ModalUser = (props) => {
             </div>
 
             <div className="col-12 col-sm-6 form-group">
-              <label>Username:</label>
+              <label>Description:</label>
               <input
                 className="form-control"
                 type="text"
-                value={userData.username}
+                value={hotelData.description}
                 onChange={(event) =>
-                  handleOnChangeInput(event.target.value, "username")
+                  handleOnChangeInput(event.target.value, "description")
+                }
+              />
+            </div>
+            <div className="col-12 col-sm-6 form-group">
+              <label>
+                country :
+              </label>
+              <input
+                className="form-control"
+                type="text"
+                value={hotelData.country}
+                onChange={(event) =>
+                  handleOnChangeInput(event.target.value, "country")
+                }
+              />
+            </div>
+            <div className="col-12 col-sm-6 form-group">
+              <label>Cheapest Price(<span className="red">*</span>):
+
+              </label>
+              <input
+                className="form-control"
+                type="text"
+                value={hotelData.cheapestPrice}
+                onChange={(event) =>
+                  handleOnChangeInput(event.target.value, "cheapestPrice")
+                }
+              />
+            </div>
+            <div className="col-12 col-sm-6 form-group">
+              <label>
+                Type:
+              </label>
+              <input
+                className="form-control"
+                type="text"
+                value={hotelData.type}
+                onChange={(event) =>
+                  handleOnChangeInput(event.target.value, "type")
                 }
               />
             </div>
 
-            <div className="col-12 col-sm-6 form-group">
-              {action === "CREATE" && (
-                <>
-                  <label>
-                    Password (<span className="red">*</span>):
-                  </label>
-                  <input
-                    className={
-                      validInputs.password
-                        ? "form-control"
-                        : "form-control is-invalid"
-                    }
-                    type="password"
-                    value={userData.password}
-                    onChange={(event) =>
-                      handleOnChangeInput(event.target.value, "password")
-                    }
-                  />
-                </>
-              )}
-            </div>
 
-            <div className="col-12 col-sm-12 form-group">
+
+            <div className="col-12 col-sm-12  form-group ">
               <label>Address:</label>
               <input
                 className="form-control"
                 type="text"
-                value={userData.address}
+                value={hotelData.address}
                 onChange={(event) =>
                   handleOnChangeInput(event.target.value, "address")
                 }
               />
             </div>
-
-            <div className="col-12 col-sm-6 form-group">
-              <label>Gender:</label>
-              <select
-                className="form-select"
-                onChange={(event) =>
-                  handleOnChangeInput(event.target.value, "sex")
-                }
-                value={userData.sex}
-              >
-                <option defaultValue="Male">Male</option>
-                <option value="Female">Female</option>
-                <option value="Other">Other</option>
-              </select>
-            </div>
-
-            <div className="col-12 col-sm-6 form-group">
+            <div className="col-12 col-sm-12  form-group ">
               <label>
-                Group (<span className="red">*</span>):
+                Photos(<span className="red">*</span>):
               </label>
-              <select
-                className={
-                  validInputs.group ? "form-select" : "form-select is-invalid"
-                }
+              <input
+                className="form-control"
+                type="text"
+                value={hotelData.photos}
                 onChange={(event) =>
-                  handleOnChangeInput(event.target.value, "group")
+                  handleOnChangeInput(event.target.value, ["photos"])
                 }
-                value={userData.group}
-              >
-                {userGroups.length > 0 &&
-                  userGroups.map((item, index) => {
-                    return (
-                      <option key={`group-${index}`} value={item.id}>
-                        {item.name}
-                      </option>
-                    );
-                  })}
-              </select>
+              />
             </div>
+
+
+
+
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={() => handleCloseModalUser()}>
+          <Button variant="secondary" onClick={() => handleCloseModalHotel()}>
             Close
           </Button>
-          <Button variant="primary" onClick={() => handleConfirmUser()}>
+          <Button variant="primary" onClick={() => handleConfirmHotel()}>
             {action === "CREATE" ? "Save" : "Update"}
           </Button>
         </Modal.Footer>
@@ -283,4 +314,4 @@ const ModalUser = (props) => {
   );
 };
 
-export default ModalUser;
+export default ModalHotel;
