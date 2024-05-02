@@ -149,3 +149,21 @@
   color: lightgray;
   cursor: pointer;
 }
+
+.bookingContainer {
+  width: 900px;
+  position: relative;
+}
+
+.bookingTable {
+  width: 100%;
+  border-collapse: collapse;
+  border-color: #0071c2;
+}
+
+
+.custom-thead {
+  background-color: #007bff;
+  color: #ffffff;
+}
+

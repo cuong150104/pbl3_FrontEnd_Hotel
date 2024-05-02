@@ -76,7 +76,11 @@ const Login = (props) => {
       loginContext(data);
       
       history.push("/");
-      window.location.reload();
+      if(true)
+      {
+
+        // window.location.reload();
+      }
 
     }
 
@@ -108,86 +112,100 @@ const Login = (props) => {
   }, [group]);
   const returnToHomePage = () => {
     history.push("/");
-    window.location.reload();
   };
   return (
-    <div className="login-container">
-      <div className="container">
-        <div className="row px-3 px-sm-0">
-          <div className="content-left col-12 d-none col-sm-7 d-sm-block">
-            <div className="brand">
-              <Link to="/" >
-                <span title="Return to HomePage" className="brand-item">
-                  <img
-                    src={logo}
-                    width="50"
-                    height="50"
-                    className="d-inline-block align-top me-3"
-                    alt="Logo"
-                  />
-                  <div className="brand__name my-3">Hotel</div>
-                </span>
-              </Link>
-            </div>
-            <div className="detail">Dường lên tiên cảnh</div>
-          </div>
-
-          <div className="content-right col-sm-5 col-12 d-flex flex-column gap-3 py-3">
-            <div className="brand d-sm-none"></div>
-            <input
-              type="text"
-              className={
-                objValidInput.isValidValueLogin
-                  ? "form-control"
-                  : "form-control is-invalid"
-              }
-              placeholder="Email address or phone number"
-              value={valueLogin}
-              onChange={(event) => {
-                setValueLogin(event.target.value);
-              }}
-            />
-            <input
-              type="password"
-              className={
-                objValidInput.isValidPassword
-                  ? "form-control"
-                  : "form-control is-invalid"
-              }
-              placeholder="Password"
-              value={password}
-              onChange={(event) => {
-                setPassword(event.target.value);
-              }}
-              onKeyDown={(event) => handlePressEnter(event)}
-            />
-            <button className="btn btn-primary" onClick={() => handleLogin()}>
-              Login
-            </button>
-            <span className="text-center">
-              <a className="forgot-password" href="#!">
-                Forgot your password?
-              </a>
-            </span>
-            <hr />
-            <div className="text-center">
-              <button
-                className="btn btn-success"
-                onClick={() => handleCreateNewAccount()}
-              >
-                Create new account
-              </button>
-              <div className="mt-3 return">
-                <Link to="#" onClick={returnToHomePage}>
-                  <i className="fa fa-arrow-circle-left"></i>
-                  <span title="Return to HomePage"> Return to HomePage </span>
-                </Link>
+    <>
+    <div class="wrapper">
+      <div class="section-authentication-signin d-flex align-items-center justify-content-center my-5 my-lg-0">
+        <div class="container-fluid">
+          <div class="row row-cols-1 row-cols-lg-1">
+            <div class="col mx-auto">
+              <div class="card">
+                <div class="card-body">
+                  <div class="border p-4 rounded">
+                    <div class="text-center">
+                      <img
+                        src={logo}
+                        width="30"
+                        height="30"
+                        className="d-inline-block align-top me-3"
+                        alt="Logo"
+                      />
+                      <h3 class="">Login</h3>
+                    </div>
+                    <p>
+                      Don't have an account yet?
+                      <Link to="/register">Register here</Link>
+                    </p>
+                    <div class="form-body">
+                      <form class="row g-3">
+                        <div class="col-12">
+                          <label for="inputEmailAddress" class="form-label">
+                            Email Address
+                          </label>
+                          <input
+                            type="text"
+                            className={
+                              objValidInput.isValidValueLogin
+                                ? "form-control"
+                                : "form-control is-invalid"
+                            }
+                            placeholder="Email address or phone number"
+                            value={valueLogin}
+                            onChange={(event) => {
+                              setValueLogin(event.target.value);
+                            }}
+                          />
+                        </div>
+                        <div class="col-12">
+                          <label for="inputChoosePassword" class="form-label">
+                            Enter Password
+                          </label>
+                          <div class="input-group" id="show_hide_password">
+                            <input
+                              type="password"
+                              className={
+                                objValidInput.isValidPassword
+                                  ? "form-control"
+                                  : "form-control is-invalid"
+                              }
+                              placeholder="Password"
+                              value={password}
+                              onChange={(event) => {
+                                setPassword(event.target.value);
+                              }}
+                              onKeyDown={(event) => handlePressEnter(event)}
+                            />
+                          </div>
+                        </div>
+                        <div class="col-md-12 d-inline-block text-center">
+                          <Link to="#">Forgot Password?</Link>
+                        </div>
+                        <div class="col-12">
+                          <div class="d-grid">
+                            <button
+                              className="btn btn-primary"
+                              onClick={(e) => {
+                                e.preventDefault(); // Ngăn chặn hành vi mặc định của sự kiện
+                                handleLogin();
+                              }}
+                            >
+                              Login
+                            </button>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+   
+  </>
   );
 };
 

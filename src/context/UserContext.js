@@ -34,6 +34,7 @@ const UserProvider = ({ children }) => {
       let email = response.DT.email;
       let username = response.DT.username;
       let token = response.DT.access_token;
+      let userId = response.DT.userId;
 
       let data = {
         isAuthenticated: true,
@@ -42,6 +43,7 @@ const UserProvider = ({ children }) => {
           groupWithRoles,
           email,
           username,
+          userId,
         },
         isLoading: false,
       };

@@ -76,7 +76,11 @@ const Login = (props) => {
       loginContext(data);
       
       history.push("/");
-      window.location.reload();
+      if(true)
+      {
+
+        // window.location.reload();
+      }
 
     }
 
@@ -108,7 +112,6 @@ const Login = (props) => {
   }, [group]);
   const returnToHomePage = () => {
     history.push("/");
-    window.location.reload();
   };
   return (
     <div className="login-container">

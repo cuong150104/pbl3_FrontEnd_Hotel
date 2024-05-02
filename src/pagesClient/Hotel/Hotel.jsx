@@ -16,6 +16,7 @@ import { useState, useContext } from "react";
 import { UserContext } from "../../context/UserContext";
 import { searchContext } from "../../context/searchContext";
 import Reserve from "../../componentsClient/Reserve/Reserve";
+import Reserve1 from "../../componentsClient/Reserve1/Reserve1";
 
 const Hotel = () => {
   const location = useLocation();
@@ -23,15 +24,17 @@ const Hotel = () => {
   const [slideNumber, setSlideNumber] = useState(0);
   const [open, setOpen] = useState(false);
   const [openModal, setOpenModal] = useState(false);
- 
+
   const { data, loading, error } = useFetch(`/api/v2/hotels/find/${id}`);
   const { user } = useContext(UserContext);
-  console.log(">> check user: ", user);
+  console.log(">> check user: ", user.account.userId);
   const history = useHistory();
   const searchContextValue = useContext(searchContext);
   let dates, options;
-  
-  
+
+  const [hotelId, setHotelId] = useState(0);
+
+
   console.log(">>check dates: ", dates);
   //const { dates, options } = useContext(searchContext);
   // console.log(">>check data hotel", data);
@@ -45,8 +48,8 @@ const Hotel = () => {
     return diffDays;
   }
 
-//  const days = dayDifference(dates[0].endDate, dates[0].startDate);
-// const [day, setday] = useState(days);
+  //  const days = dayDifference(dates[0].endDate, dates[0].startDate);
+  // const [day, setday] = useState(days);
   const handleOpen = (i) => {
     setSlideNumber(i);
     setOpen(true);
@@ -63,18 +66,25 @@ const Hotel = () => {
 
     setSlideNumber(newSlideNumber);
   };
-  
+
   const handleClick = () => {
     console.log(">> check user click: ", user);
     if (user.isAuthenticated === true) {
-     setOpenModal(true);
-     console.log("check setpen ", openModal);
+      setOpenModal(true);
+      console.log("check setpen ", openModal);
     } else {
       history.push("/login");
     }
-    
+
   };
-  
+
+  // const groupedRooms = {};
+  // data.forEach((item) => {
+  //   if (!groupedRooms[item.title]) {
+  //     groupedRooms[item.title] = [];
+  //   }
+  //   groupedRooms[item.title].push(item);
+  // });
   return (
     <div>
       <Navbar />
@@ -97,8 +107,8 @@ const Hotel = () => {
               />
               <div className="sliderWrapper">
                 <img
-                 // src={data.photos[slideNumber]}
-                 src={JSON.parse(data.photos)[slideNumber]}
+                  // src={data.photos[slideNumber]}
+                  src={JSON.parse(data.photos)[slideNumber]}
                   alt=""
                   className="sliderImg"
                 />
@@ -124,18 +134,7 @@ const Hotel = () => {
               Book a stay over ${data.cheapestPrice} at this property and get a
               free airport taxi
             </span>
-            {/* <div className="hotelImages">
-              {JSON.parse(data.photos)?.map((photo, i) => (
-                <div className="hotelImgWrapper" key={i}>
-                  <img
-                    onClick={() => handleOpen(i)}
-                    src={photo}
-                    alt=""
-                    className="hotelImg"
-                  />
-                </div>
-              ))}
-            </div> */}
+
             <div className="hotelImages">
               {data.photos && JSON.parse(data.photos).map((photo, i) => (
                 <div className="hotelImgWrapper" key={i}>
@@ -168,13 +167,22 @@ const Hotel = () => {
                 <button onClick={handleClick}>Reserve or Book Now!</button>
               </div>
             </div>
+
           </div>
+          <Reserve1 hotelId={id} userId = {user.account.userId}/>
           <MailList />
           <Footer />
+          
         </div>
       )}
-      {openModal && <Reserve setOpen={setOpenModal} hotelId={id} />}
+
+   
+
+
+
+
     </div>
+
   );
 };
 

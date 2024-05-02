@@ -86,8 +86,9 @@ const Root = () => {
         }
         const userGroup = response.DT.groupWithRoles.id;; // Assuming username field contains user group
         console.error(">> check group: ", response.DT.groupWithRoles.id);
-        setGroup(userGroup); // Update group state with fetched user group
+        setGroup(userGroup || 4); // Update group state with fetched user group
       } catch (error) {
+        setGroup(4)
         console.error('Error fetching data:', error);
       }
     };
@@ -105,7 +106,7 @@ const Root = () => {
       break;
     default:
       //componentToRender = <AppAdmin />;
-      componentToRender = <AppClient />;
+      // componentToRender = <AppClient />;
       break;
   }
 
@@ -113,7 +114,7 @@ const Root = () => {
     <React.StrictMode>
       <UserProvider>
         <SearchContextProvider>
-          {componentToRender}
+          {componentToRender || ''}
         </SearchContextProvider>
       </UserProvider>
     </React.StrictMode>
