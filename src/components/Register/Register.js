@@ -4,7 +4,7 @@ import { useHistory, Link } from "react-router-dom";
 import { useEffect, useState, useContext } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { registerNewUser } from "../../servicesAdmin/userService";
+import { registerNewUser } from "../../services/servicesAdmin/userService";
 import logo from "../../logo.png";
 import { UserContext } from "../../context/UserContext";
 

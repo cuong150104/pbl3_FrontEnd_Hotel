@@ -3,25 +3,21 @@ import "./Login.scss";
 import { useHistory, Link } from "react-router-dom";
 
 import { toast } from "react-toastify";
-import { loginUser } from "../../servicesAdmin/userService";
+import { loginUser } from "../../services/servicesAdmin/userService";
 import { UserContext } from "../../context/UserContext";
 import logo from "../../logo.png";
 import React from 'react';
 import ReactDOM from 'react-dom';
 // import Root from '../../Root'; // Import Root component from Root.js
 import reportWebVitals from '../../reportWebVitals';
-// const renderApp = () => {
-//   ReactDOM.render(<Root />, document.getElementById('root'));
-// };
 
 const Login = (props) => {
   const { user, loginContext } = useContext(UserContext);
-  let history = useHistory();
 
+  let history = useHistory();
 
   const [valueLogin, setValueLogin] = useState("");
   const [password, setPassword] = useState("");
-  const [group, setGroup] = useState(null);
 
   const defaultObjValidInput = {
     isValidValueLogin: true,
@@ -42,8 +38,6 @@ const Login = (props) => {
       return;
     }
 
-
-
     if (!password) {
       setObjValidInput({ ...defaultObjValidInput, isValidPassword: false });
       toast.error("Please enter your password");
@@ -58,7 +52,7 @@ const Login = (props) => {
       let email = response.DT.email;
       let username = response.DT.username;
       let token = response.DT.access_token;
-      let groupId = response.DT.groupWithRoles.id;
+
       let data = {
         isAuthenticated: true,
         token,
@@ -67,21 +61,17 @@ const Login = (props) => {
           email,
           username,
         },
-
       };
-      setGroup(groupId);
 
-
-      localStorage.setItem("pbl3_hotel", token);
+      localStorage.setItem("jwt", token);
       loginContext(data);
-      
-      history.push("/");
-      if(true)
-      {
-
-        // window.location.reload();
+      if (groupWithRoles.name === "Admin") {
+        history.push("/admin");
+      } else if (groupWithRoles.name === "Customer") {
+        history.push("/company");
+      } else {
+        history.push("/");
       }
-
     }
 
     if (response && +response.EC !== 0) {
@@ -90,111 +80,101 @@ const Login = (props) => {
     }
   };
 
-
   const handlePressEnter = (event) => {
     if (event.code === "Enter") {
       handleLogin();
-      
     }
   };
 
   useEffect(() => {
     if (user && user.isAuthenticated) {
-      // history.push("/");
-
-      // renderApp();
-
       history.push("/");
     }
-    // console.log(">>check log:   huhuh");
-    //   renderApp();
+  }, []);
 
-  }, [group]);
-  const returnToHomePage = () => {
-    history.push("/");
-  };
   return (
     <>
-    <div class="wrapper">
-      <div class="section-authentication-signin d-flex align-items-center justify-content-center my-5 my-lg-0">
-        <div class="container-fluid">
-          <div class="row row-cols-1 row-cols-lg-1">
-            <div class="col mx-auto">
-              <div class="card">
-                <div class="card-body">
-                  <div class="border p-4 rounded">
-                    <div class="text-center">
-                      <img
-                        src={logo}
-                        width="30"
-                        height="30"
-                        className="d-inline-block align-top me-3"
-                        alt="Logo"
-                      />
-                      <h3 class="">Login</h3>
-                    </div>
-                    <p>
-                      Don't have an account yet?
-                      <Link to="/register">Register here</Link>
-                    </p>
-                    <div class="form-body">
-                      <form class="row g-3">
-                        <div class="col-12">
-                          <label for="inputEmailAddress" class="form-label">
-                            Email Address
-                          </label>
-                          <input
-                            type="text"
-                            className={
-                              objValidInput.isValidValueLogin
-                                ? "form-control"
-                                : "form-control is-invalid"
-                            }
-                            placeholder="Email address or phone number"
-                            value={valueLogin}
-                            onChange={(event) => {
-                              setValueLogin(event.target.value);
-                            }}
-                          />
-                        </div>
-                        <div class="col-12">
-                          <label for="inputChoosePassword" class="form-label">
-                            Enter Password
-                          </label>
-                          <div class="input-group" id="show_hide_password">
+      <div class="wrapper">
+        <div class="section-authentication-signin d-flex align-items-center justify-content-center my-5 my-lg-0">
+          <div class="container-fluid">
+            <div class="row row-cols-1 row-cols-lg-1">
+              <div class="col mx-auto">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="border p-4 rounded">
+                      <div class="text-center">
+                        <img
+                          src={logo}
+                          width="30"
+                          height="30"
+                          className="d-inline-block align-top me-3"
+                          alt="Logo"
+                        />
+                        <h3 class="">Login</h3>
+                      </div>
+                      <p>
+                        Don't have an account yet?
+                        <Link to="/register">Register here</Link>
+                      </p>
+                      <div class="form-body">
+                        <form class="row g-3">
+                          <div class="col-12">
+                            <label for="inputEmailAddress" class="form-label">
+                              Email Address
+                            </label>
                             <input
-                              type="password"
+                              type="text"
                               className={
-                                objValidInput.isValidPassword
+                                objValidInput.isValidValueLogin
                                   ? "form-control"
                                   : "form-control is-invalid"
                               }
-                              placeholder="Password"
-                              value={password}
+                              placeholder="Email address or phone number"
+                              value={valueLogin}
                               onChange={(event) => {
-                                setPassword(event.target.value);
+                                setValueLogin(event.target.value);
                               }}
-                              onKeyDown={(event) => handlePressEnter(event)}
                             />
                           </div>
-                        </div>
-                        <div class="col-md-12 d-inline-block text-center">
-                          <Link to="#">Forgot Password?</Link>
-                        </div>
-                        <div class="col-12">
-                          <div class="d-grid">
-                            <button
-                              className="btn btn-primary"
-                              onClick={(e) => {
-                                e.preventDefault(); // Ngăn chặn hành vi mặc định của sự kiện
-                                handleLogin();
-                              }}
-                            >
-                              Login
-                            </button>
+                          <div class="col-12">
+                            <label for="inputChoosePassword" class="form-label">
+                              Enter Password
+                            </label>
+                            <div class="input-group" id="show_hide_password">
+                              <input
+                                type="password"
+                                className={
+                                  objValidInput.isValidPassword
+                                    ? "form-control"
+                                    : "form-control is-invalid"
+                                }
+                                placeholder="Password"
+                                value={password}
+                                onChange={(event) => {
+                                  setPassword(event.target.value);
+                                }}
+                                onKeyDown={(event) => handlePressEnter(event)}
+                              />
+                            </div>
                           </div>
-                        </div>
-                      </form>
+                          <div class="col-md-12 d-inline-block text-center">
+                            <Link to="#">Forgot Password?</Link>
+                          </div>
+                          <div class="col-12">
+                            <div class="d-grid">
+                              <button
+                                className="btn btn-primary"
+                                onClick={(e) => {
+                                  e.preventDefault(); // Ngăn chặn hành vi mặc định của sự kiện
+                                  handleLogin();
+                                }}
+                              >
+                                Login
+                              </button>
+                            </div>
+                          </div>
+                        </form>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -203,9 +183,8 @@ const Login = (props) => {
           </div>
         </div>
       </div>
-    </div>
-   
-  </>
+
+    </>
   );
 };
 

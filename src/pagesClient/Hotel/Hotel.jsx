@@ -1,8 +1,8 @@
 import "./Hotel.scss";
-import Navbar from "../../componentsClient/Navbar/Navbar";
-import Header from "../../componentsClient/HeaderClient/HeaderClient";
-import Footer from "../../componentsClient/Footer/Footer";
-import MailList from "../../componentsClient/MailList/MailList";
+import Navbar from "../../components/Client/Navbar/Navbar";
+import Header from "../../components/Client/HeaderClient/HeaderClient";
+import Footer from "../../components/Client/Footer/Footer";
+import MailList from "../../components/Client/MailList/MailList";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCircleArrowLeft,
@@ -15,8 +15,8 @@ import useFetch from "../../hooks/useFetch";
 import { useState, useContext } from "react";
 import { UserContext } from "../../context/UserContext";
 import { searchContext } from "../../context/searchContext";
-import Reserve from "../../componentsClient/Reserve/Reserve";
-import Reserve1 from "../../componentsClient/Reserve1/Reserve1";
+// import Reserve from "../../components/Client/Reserve/Reserve";
+import Reserve1 from "../../components/Client/Reserve1/Reserve1";
 
 const Hotel = () => {
   const location = useLocation();
@@ -169,14 +169,14 @@ const Hotel = () => {
             </div>
 
           </div>
-          <Reserve1 hotelId={id} userId = {user.account.userId}/>
+          <Reserve1 hotelId={id} userId={user.account.userId} />
           <MailList />
           <Footer />
-          
+
         </div>
       )}
 
-   
+
 
 
 

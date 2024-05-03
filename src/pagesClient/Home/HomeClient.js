@@ -1,13 +1,13 @@
 
-import Navbar from "../../componentsClient/Navbar/Navbar";
-import Header from "../../componentsClient/HeaderClient/HeaderClient";
+import Navbar from "../../components/Client/Navbar/Navbar";
+import Header from "../../components/Client/HeaderClient/HeaderClient";
 import "./HomeClient.scss";
 
-import Featured from "../../componentsClient/Featured/Featured";
-import FeaturedProperties from "../../componentsClient/FeaturedProperties/FeaturedProperties";
-import PropertyList from "../../componentsClient/PropertyList/PropertyList";
-import Footer from "../../componentsClient/Footer/Footer";
-import MailList from "../../componentsClient/MailList/MailList";
+import Featured from "../../components/Client/Featured/Featured";
+import FeaturedProperties from "../../components/Client/FeaturedProperties/FeaturedProperties";
+import PropertyList from "../../components/Client/PropertyList/PropertyList";
+import Footer from "../../components/Client/Footer/Footer";
+import MailList from "../../components/Client/MailList/MailList";
 
 
 
