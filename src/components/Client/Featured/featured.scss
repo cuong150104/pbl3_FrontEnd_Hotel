@@ -6,6 +6,7 @@
     gap: 20px;
     z-index: 1;
   
+  
     .featuredItem {
       position: relative;
       color: white;
@@ -24,7 +25,13 @@
         position: absolute;
         bottom: 20px;
         left: 20px;
+        font-family: "Fantasy", sans-serif;
+        font-style: oblique;
+        font-weight: bold;
+        font-size: 20px;
+        font-family: Arial, sans-serif;
       }
     }
   }
   
+

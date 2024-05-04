@@ -55,12 +55,12 @@ const HeaderClient = ({ type }) => {
   const { dispatch } = useContext(searchContext);
 
   const handleSearch =  () => {
-    dispatch({ type: "NEW_SEARCH", payload: { destination, dates, options } });
+    // dispatch({ type: "NEW_SEARCH", payload: { destination, dates, options } });
     history.push("/hotels", { destination, dates, options } );
   };
 
   return (
-    <div className="header">
+    <div className="headerClient">
       <div
         className={
           type === "list" ? "headerContainer listMode" : "headerContainer"

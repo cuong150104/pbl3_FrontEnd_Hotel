@@ -1,15 +1,18 @@
-.header {
+.headerClient {
   background-color: #003580;
   color: white;
   display: flex;
   justify-content: center;
   position: relative;
+  height: 130px;
+
 }
 
 .headerContainer {
-  width: 100%;
-  max-width: 1024px;
+  width: 80%;
+  // max-width: 1024px;
   margin: 20px 0px 30px 0px;
+
 }
 
 .headerContainer.listMode {
@@ -35,32 +38,55 @@
 }
 
 .headerDesc {
-  margin: 20px 0px;
+  // margin: 20px 0px;
+  margin-left: 9%;
 }
 
-.headerBtn {
-  background-color: #0071c2;
-  color: white;
-  font-weight: 500;
-  border: none;
-  padding: 10px;
-  cursor: pointer;
-}
+
 
 .headerSearch {
   height: 30px;
   background-color: white;
   border: 3px solid #febb02;
-  display: flex;
-  align-items: center;
-  justify-content: space-around;
-  padding: 10px 0px;
+  padding: 15px 0px;
   border-radius: 5px;
   position: absolute;
   bottom: -25px;
-  width: 100%;
-  max-width: 1024px;
+  width: 80%;
+  /* justify-content: space-around; */
+  display: flex;
+  justify-content: center;
+
+  // margin: auto;
+
+  .headerBtn {
+    background-color: #0071c2;
+    color: white;
+    font-weight: 500;
+    border: none;
+    padding: 5px;
+    cursor: pointer;
+    height: 30px;
+
+    display: flex;
+    justify-content: center;
+    /* Căn giữa theo chiều ngang */
+    align-items: center;
+    border: solid #0071c2;
+    border-radius: 5px;
+
+
+  }
+
+  .headerSearchText {
+    color: lightgray;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    // margin-left: -30px;
+  }
 }
+
 
 .headerIcon {
   color: lightgray;
@@ -70,6 +96,7 @@
   display: flex;
   align-items: center;
   gap: 10px;
+  // font-size: 10px;
 }
 
 .headerSearchInput {
@@ -77,9 +104,11 @@
   outline: none;
 }
 
-.headerSearchText {
+
+.headerSearchTextPeople {
   color: lightgray;
   cursor: pointer;
+  // margin-right: 5%;
 }
 
 .date {
@@ -125,4 +154,13 @@
 
 .optionCounterButton:disabled {
   cursor: not-allowed;
+}
+
+.headerTitle {
+  font-style: italic;
+  font-weight: bold;
+  font-size: 30px;
+  font-family: Arial, sans-serif;
+  // margin-left: 50px;
+  margin-left: 9%;
 }

@@ -43,12 +43,14 @@ const App = () => {
                             user.account.groupWithRoles &&
                             user.account.groupWithRoles.name === "Admin" ? (
                             <>
-                                <div className="app-header">
-                                    <AdminNav />
-                                </div>
+                                <div className="containerAdmin">
+                                    <div className="app-header">
+                                        <AdminNav />
+                                    </div>
 
-                                <div className="app-container">
-                                    <AdminRoutes />
+                                    <div className="app-container">
+                                        <AdminRoutes />
+                                    </div>
                                 </div>
                             </>
                         ) : (
@@ -69,8 +71,10 @@ const App = () => {
 
 
                                     <>
-                                        <div className="app-header">
-                                            <ClientRoutes />
+                                        <div className="containerClient">
+                                            <div className="app-header">
+                                                <ClientRoutes />
+                                            </div>
                                         </div>
                                     </>
 
