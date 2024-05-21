@@ -6,7 +6,8 @@ import useFetch from "../../../hooks/useFetch";
 import { useEffect, useContext, useState } from "react";
 import { searchContext } from "../../../context/searchContext";
 import axios from "axios";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
+
 import React from 'react';
 // import _ from "lodash";
 import {
@@ -23,7 +24,7 @@ import { fetchRoom_By_RoomType } from "../../../servises/roomServises";
 import { getMaxIdReservation } from "../../../servises/reservationService";
 import { createNewReservationDetail } from "../../../servises/reservationDetailService";
 
-const Reserve1 = ({ hotelId, userId }) => {
+const Reserve1 = ({ hotelId, userId, email }) => {
   const { data } = useFetch(`/api/v1/hotels/room/${hotelId}`);
   const { dates } = useContext(searchContext);
 
@@ -105,14 +106,14 @@ const Reserve1 = ({ hotelId, userId }) => {
   // const defaultReservationDetailData = {
   //   roomId: "",
   //   selectedRooms: "",
-  //   totalPriceByRoom: "",
+  //   PriceByRoom: "",
   // };
 
   const selectRooms = {
     roomId: "",
     roomTypeId: "",
     selectedRooms: 0,
-    totalPriceByRoom: "",
+    PriceByRoom: "",
     isSelected: false,
     typeRoom: false,
     countRoom: "",
@@ -135,172 +136,6 @@ const Reserve1 = ({ hotelId, userId }) => {
     setArrSelect(newArrSelect);
 
   }
-
-
-
-  const defaultReservationDetailData = {
-    userId: 1, // ID của người dùng
-    reservationId: "",
-    startDate: '2024-06-01',
-    endDate: '2024-06-05',
-
-    bookingDetails: [] // Mảng chứa các chi tiết đặt phòng
-  };
-
-  const [reservationDetailData, setReservationDetailData] = useState(defaultReservationDetailData);
-
-
-  const handleSelectRoomChange = async (value) => {
-     let reservationId = await getMaxIdReservation();
-      console.log(">>>check max id1", reservationId.DT +1);
-      setReservationDetailData(prevState => ({
-        ...prevState,
-        reservationId: reservationId.DT +1// Assuming reservationId.DT contains the new reservation ID
-      }));
-      console.log(">>>check max id2", reservationDetailData.reservationId);
-    if (value) {
-      const [selectedCountRoom, roomTypeId, totalPrice] = value.split('-');
-      console.log(">>check roomchang var: ", selectedCountRoom, roomTypeId, totalPrice);
-
-      const newBookingDetail = {
-        roomTypeId: parseInt(roomTypeId),
-        selectedRooms: parseInt(selectedCountRoom),
-        totalPriceByRoom: parseInt(totalPrice),
-      };
-
-      setReservationDetailData(prevData => {
-        const existingIndex = prevData.bookingDetails.findIndex(detail => detail.roomTypeId === newBookingDetail.roomTypeId);
-
-        if (existingIndex !== -1) {
-          if (newBookingDetail.selectedRooms === 0) {
-            // Xóa mục khỏi danh sách nếu selectedRooms bằng 0
-            return {
-              ...prevData,
-              bookingDetails: prevData.bookingDetails.filter(detail => detail.roomTypeId !== newBookingDetail.roomTypeId)
-            };
-          } else {
-            // Cập nhật thông tin đặt phòng nếu đã tồn tại
-            const updatedDetails = [...prevData.bookingDetails];
-            updatedDetails[existingIndex] = newBookingDetail;
-            return {
-              ...prevData,
-              bookingDetails: updatedDetails
-            };
-          }
-        } else {
-          // Thêm mới thông tin đặt phòng nếu selectedRooms không bằng 0
-          return newBookingDetail.selectedRooms !== 0 ? {
-            ...prevData,
-            bookingDetails: [...prevData.bookingDetails, newBookingDetail]
-          } : prevData;
-        }
-      });
-    }
-
-  };
-
-
-
-
-  const saveReservationDetails = async () => {
-    try {
-      const reservationId = await getMaxIdReservation();
-
-      for (const detail of reservationDetailData.bookingDetails) {
-        const { roomTypeId, selectedRooms, totalPriceByRoom} = detail;
-
-        console.log(">>check data save: ", selectedRooms);
-       
-        // Lấy các phòng dựa trên roomTypeId
-        const roomData = await fetchRoom_By_RoomType(roomTypeId);
-        if (roomData.EC !== 0) {
-          console.error(roomData.EM);
-          continue;
-        }
-        // console.log(">>check room data: ", roomData.DT.rooms);
-
-        const availableRooms = roomData.DT.rooms.filter(room => room.roomStatus === 0);
-
-        console.log(">>check availableRooms: ", availableRooms);
-        if (availableRooms.length === 0) {
-          console.log(`No available rooms found for room type ID ${roomTypeId}`);
-          continue;
-        }
-
-        for (let i = 0; i < selectedRooms; i++) {
-          const roomIdSelected = availableRooms[i % availableRooms.length].id; // Chọn phòng khả dụng
-
-          console.log(">>check roomId: ", roomIdSelected);
-          const dataDetail = {
-            roomId: roomIdSelected,
-            reservationId: reservationDetailData.reservationId, // Giả định tăng ID đặt phòng
-            price: totalPriceByRoom,
-            startDate,
-            endDate
-          };
-
-          // console.log(">>check data save: ", dataDetail);
-          await createNewReservationDetail(dataDetail);
-          // if (res && res.EC === 0) {
-
-          //   setUserData({
-          //     ...defaultUserData,
-          //     group: userGroups && userGroups.length > 0 ? userGroups[0].id : "",
-          //   });
-          //   toast.success("UPDATE success");
-          // } else {
-          //   toast.error(res.EM);
-
-          // }
-
-
-        }
-      }
-    } catch (error) {
-      console.error('Error saving reservation details:', error);
-    }
-  };
-
-
-
-
-
-
-
-
-
-  const defaultReservation = {
-    userId: userId,
-    hotelId: hotelId,
-    roomCount: "",
-    totalPrice: "",
-    reservationStatus: "",
-    discountPercent: "",
-    description: "",
-    isPayment: "",
-    startDate: "",
-    endDate: "",
-    reservationDate: "",
-  };
-
-
-  const [reservation, setReservation] = useState(defaultReservation);
-
-  const createNewReservation = (data) => {
-
-
-  }
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -346,6 +181,141 @@ const Reserve1 = ({ hotelId, userId }) => {
 
 
 
+
+  const defaultReservationDetailData = {
+    userId: 1, // ID của người dùng
+    reservationId: "",
+    startDate: '2024-06-01',
+    endDate: '2024-06-05',
+
+    bookingDetails: [] // Mảng chứa các chi tiết đặt phòng
+  };
+
+  const [reservationDetailData, setReservationDetailData] = useState(defaultReservationDetailData);
+
+  const defaultReservation = {
+    userId: userId,
+    hotelId: hotelId,
+    roomCount: "",
+    totalPrice: "",
+    reservationStatus: "",
+    discountPercent: "",
+    description: "",
+    isPayment: "",
+    startDate: startDate,
+    endDate: endDate,
+    reservationDate: "",
+
+    name: "",
+    address: "",
+    phoneNumber: "",
+    email:email,
+  };
+
+  const [reservation, setReservation] = useState(defaultReservation);
+
+  const handleSelectRoomChange = async (value) => {
+    let reservationId = await getMaxIdReservation();
+    console.log(">>>check max id1", reservationId.DT + 1);
+    setReservationDetailData(prevState => ({
+      ...prevState,
+      reservationId: reservationId.DT + 1// Assuming reservationId.DT contains the new reservation ID
+    }));
+    console.log(">>>check max id2", reservationDetailData.reservationId);
+    if (value) {
+      const [selectedCountRoom, roomTypeId, totalPrice] = value.split('-');
+      console.log(">>check roomchang var: ", selectedCountRoom, roomTypeId, totalPrice);
+
+      const newBookingDetail = {
+        roomTypeId: parseInt(roomTypeId),
+        selectedRooms: parseInt(selectedCountRoom),
+        PriceByRoom: parseInt(totalPrice),
+      };
+
+      setReservationDetailData(prevData => {
+        const existingIndex = prevData.bookingDetails.findIndex(detail => detail.roomTypeId === newBookingDetail.roomTypeId);
+
+        if (existingIndex !== -1) {
+          if (newBookingDetail.selectedRooms === 0) {
+            // Xóa mục khỏi danh sách nếu selectedRooms bằng 0
+            return {
+              ...prevData,
+              bookingDetails: prevData.bookingDetails.filter(detail => detail.roomTypeId !== newBookingDetail.roomTypeId)
+            };
+          } else {
+            // Cập nhật thông tin đặt phòng nếu đã tồn tại
+            const updatedDetails = [...prevData.bookingDetails];
+            updatedDetails[existingIndex] = newBookingDetail;
+            return {
+              ...prevData,
+              bookingDetails: updatedDetails
+            };
+          }
+        } else {
+          // Thêm mới thông tin đặt phòng nếu selectedRooms không bằng 0
+          return newBookingDetail.selectedRooms !== 0 ? {
+            ...prevData,
+            bookingDetails: [...prevData.bookingDetails, newBookingDetail]
+          } : prevData;
+        }
+      });
+    }
+
+  };
+
+
+
+  const saveReservationDetails = async () => {
+    try {
+      const reservationId = await getMaxIdReservation();
+      let totalRoom = 0;
+      let totalPrice = 0;
+      for (const detail of reservationDetailData.bookingDetails) {
+        const { roomTypeId, selectedRooms, PriceByRoom } = detail;
+        totalRoom += selectedRooms;
+
+        const roomData = await fetchRoom_By_RoomType(roomTypeId);
+        if (roomData.EC !== 0) {
+          console.error(roomData.EM);
+          continue;
+        }
+
+        const availableRooms = roomData.DT.rooms.filter(room => room.roomStatus === 0);
+        if (availableRooms.length === 0) {
+          console.log(`No available rooms found for room type ID ${roomTypeId}`);
+          continue;
+        }
+
+        for (let i = 0; i < selectedRooms; i++) {
+          if (i >= availableRooms.length) {
+            console.log("Not enough available rooms to fulfill the reservation request.");
+            break;
+          }
+          const roomIdSelected = availableRooms[i].id;
+          totalPrice += PriceByRoom;
+          await createNewReservationDetail({
+            roomId: roomIdSelected,
+            reservationId: reservationDetailData.reservationId,
+            price: PriceByRoom,
+            startDate: reservationDetailData.startDate,
+            endDate: reservationDetailData.endDate
+          });
+        }
+      }
+
+      setReservation(prev => ({ ...prev, roomCount: totalRoom, totalPrice: totalPrice }));
+      console.log("Total rooms reserved:", totalRoom);
+    } catch (error) {
+      console.error('Error saving reservation details:', error);
+    }
+  };
+
+
+
+
+
+
+
   const history = useHistory();
 
   const handleClick = async () => {
@@ -354,22 +324,17 @@ const Reserve1 = ({ hotelId, userId }) => {
 
 
 
-  //// 
 
   const handleConfirmReservation = async () => {
-    // let check = checkValidateInputs();
-    let check = true;
     if (userId) {
-      let res = await saveReservationDetails();
+      await saveReservationDetails();
+      // await createNewReservation(reservation);
 
-
+      toast.success('Reservation confirmed!');
     } else {
-      history.push("/login");
+      history.push('/login');
     }
   };
-
-
-
 
 
   const handleOnChangeInput = (value, name) => {
@@ -433,7 +398,7 @@ const Reserve1 = ({ hotelId, userId }) => {
                               {Array.from({ length: item.countRoom }, (_, index) => {
                                 const selectedCountRoom = index + 1;
                                 return (
-                                  <option key={index + 1} value={`${selectedCountRoom}-${item.id}-${(index + 1) * item.price}`}>
+                                  <option key={index + 1} value={`${selectedCountRoom}-${item.id}-${item.price}`}>
                                     {selectedCountRoom} &nbsp; &nbsp;&nbsp;&nbsp;($&nbsp;{selectedCountRoom * item.price})
                                   </option>
                                 );
@@ -461,18 +426,30 @@ const Reserve1 = ({ hotelId, userId }) => {
         </div>
       </div>
 
-      <Button variant="primary"
+      {/* <Button variant="primary"
         onClick={() => handleConfirmReservation()}
       >
         Reserve Now!
 
-      </Button>
+      </Button> */}
+      {/* <div>
+        <Link to="/reservation">Reserve Now!</Link>
+      </div> */}
+
+      <Link
+        to={{
+          pathname: "/reservation",
+          state: {
+            reservation,
+          }
+        }}
+        onClick={handleConfirmReservation}
+      >
+        Reserve Now!
+      </Link>
     </div>
 
   );
 };
 
 export default Reserve1;
-
-
-

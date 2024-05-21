@@ -6,6 +6,7 @@ import Hotel from "../pagesClient/Hotel/Hotel";
 import Test from "../pagesClient/Test/Test";
 import { Switch, Route } from "react-router-dom";
 import PrivateRoutes from "./PrivateRoutes";
+import Reservation from "../pagesClient/Reservation/Reservation"
 const ClientRoutes = (props) => {
  
     return (
@@ -26,6 +27,10 @@ const ClientRoutes = (props) => {
           </Route>
           <Route path="/hotels/city/:city">
           <List/>
+          </Route>
+
+          <Route path="/reservation">
+          <Reservation/>
           </Route>
            
           <Route path="/" exact>

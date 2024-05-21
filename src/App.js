@@ -64,7 +64,7 @@ const App = () => {
                                             <CustomerNav />
                                         </div>
                                         <div className="app-container">
-                                            {/* <CompanyRoutes /> */}
+                                           
                                         </div>
                                     </>
                                 ) : (

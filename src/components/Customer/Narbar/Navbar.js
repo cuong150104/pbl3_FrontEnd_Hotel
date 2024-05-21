@@ -64,7 +64,7 @@ const CompanyNav = (props) => {
                     className="d-inline-block align-top mx-3"
                     alt="Logo"
                   />
-                  <span className="brand-name">Company</span>
+                  <span className="brand-name">Hotel</span>
                 </h3>
               </Navbar.Brand>
               <Container>

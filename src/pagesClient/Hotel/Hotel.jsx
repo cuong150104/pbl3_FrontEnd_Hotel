@@ -147,7 +147,7 @@ const Hotel = () => {
          
 
           </div>
-          <Reserve hotelId={id} userId={user.account.userId} />
+          <Reserve hotelId={id} userId={user.account.userId} email = {user.account.email}/>
           <MailList />
           <Footer />
 
