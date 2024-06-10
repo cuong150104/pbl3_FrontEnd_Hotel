@@ -74,6 +74,12 @@ const CompanyNav = (props) => {
                     <NavLink to="/hotels" className="nav-link">
                       Hotels
                     </NavLink>
+                    <NavLink to="/bookings" className="nav-link">
+                      Bookings
+                    </NavLink>
+                    <NavLink to="/statistics" className="nav-link">
+                      Statistics
+                    </NavLink>
                   </Nav>
                   <Nav>
                     <Nav.Item className="nav-link welcome">
