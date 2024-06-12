@@ -26,8 +26,9 @@ const ClientRoutes = (props) => {
            <Hotel/>
           </Route>
           <Route path="/hotels/city/:city">
-          <List/>
-          </Route>
+          <List />
+        </Route>
+        
 
           <Route path="/reservation">
           <Reservation/>

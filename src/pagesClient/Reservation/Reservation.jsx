@@ -39,8 +39,11 @@ const Reservation = () => {
     };
 
     const handleConfirmReservation = async () => {
+        try {
+            await createNewReservation(formData);
+        } catch (error) {
 
-        await createNewReservation(formData);
+        }
 
         toast.success('Reservation confirmed!');
         history.push('/login');
@@ -50,10 +53,13 @@ const Reservation = () => {
     const handBookingMessage = async () => {
         // if(formData.name && formData.phoneNumber && form.address)
         let data = {
+
             email: formData.email,
             name: formData.name,
             phoneNumber: formData.phoneNumber,
             address: formData.address,
+            startDate: formData.startDate,
+            endDate: formData.endDate,
         }
         console.log(">>>> check email, n", data);
 
@@ -66,7 +72,9 @@ const Reservation = () => {
         }
 
     }
+
     return (
+
         <div className="reservation-form-containerRR">
             <form className="reservation-formRR" onSubmit={handleSubmit}>
                 <h2 className='h2RR'>Hotel Reservation Form</h2>

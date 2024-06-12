@@ -177,8 +177,14 @@ const Login = (props) => {
                               />
                             </div>
                           </div>
-                          <div className="col-md-12 d-inline-block text-center">
+                          {/* <div className="col-md-12 d-inline-block text-center">
                             <Link to="#">Forgot Password?</Link>
+                          </div> */}
+                          <div className="mt-3 return text-center">
+                            <Link to="#" onClick={returnToHomePage}>
+                              <i className="fa fa-arrow-circle-left"></i>
+                              <span title="Return to HomePage "> Return to HomePage </span>
+                            </Link>
                           </div>
                           <div className="col-12">
                             <div className="d-grid">

@@ -17,7 +17,7 @@ const FeaturedProperties = () => {
     let response = await fetchAllHotels(1, 30);
 
     if (response && response.EC === 0) {
-      console.log(">>checl",response.DT.hotels);
+      // console.log(">>checl",response.DT.hotels);
 
       setListHotels(response.DT.hotels);
 

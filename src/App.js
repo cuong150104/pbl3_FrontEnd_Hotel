@@ -12,7 +12,7 @@ import { UserContext } from "./context/UserContext";
 import Scrollbars, { ScrollbarProps } from "react-custom-scrollbars";
 
 import ClientRoutes from "./routes/ClientRoutes";
-import CompanyRoutes from "./routes/HotelRoutes";
+import HotelRoutes from "./routes/HotelRoutes";
 const App = () => {
   const { user } = useContext(UserContext);
   const [scrollHeight, setScrollHeight] = useState(0);
@@ -20,7 +20,7 @@ const App = () => {
   useEffect(() => {
     let windowHeight = window.innerHeight;
     setScrollHeight(windowHeight);
-    console.log("user:");
+    // console.log("user:");
     console.log(user);
   }, [user]);
 
@@ -65,7 +65,7 @@ const App = () => {
                       <CustomerNav />
                     </div>
                     <div className="app-container">
-                      <CompanyRoutes />
+                      <HotelRoutes />
                     </div>
                   </>
                 ) : (

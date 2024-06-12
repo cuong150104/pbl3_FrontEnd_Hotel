@@ -28,13 +28,9 @@ const Reserve1 = ({ hotelId, userId, email }) => {
   const { data } = useFetch(`/api/v1/hotels/room/${hotelId}`);
   const { dates } = useContext(searchContext);
 
-
-
-
-
-
-
-
+  // console.log("check dateeeee: ", dates);
+  // console.log("check dateeeee  start: ", dates[0]?.startDate);
+  // console.log("check dateeeee  start: ", dates[0].endDate);
   const defaultReservationData = {
     userId: userId,
     hotelId: hotelId,
@@ -53,30 +49,26 @@ const Reserve1 = ({ hotelId, userId, email }) => {
     roomCount: true,
   };
 
-
-
-
-
   const [reservationData, setReservationData] = useState(defaultReservationData);
   const [validInputs, setValidInputs] = useState(validInputsDefault);
+  const [startDate1, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
+  const [alldates, setAllDates] = useState([]);
 
-
-
-
-
-  //
+  useEffect(() => {
+    saveStartDate();
+    loadStartDate();
+  }, []);
 
   useEffect(() => {
     getRoomTypeByHotel();
     handleSelectRooms();
     getRoom_By_TypeRoom();
+
   }, []);
 
   const [ListRoomTypeByHotel, setListRoomTypeByHotel] = useState([]);
   const [roomTypeId, setRoomTypeId] = useState([0]);
-  // const [selectRoom, setSelectRoom] = useState("");
-  // const [selectedRooms, setSelectedRooms] = useState([]);
-
 
   const getRoomTypeByHotel = async () => {
     let data = await fetchRoomTypeByHotel(hotelId);
@@ -109,6 +101,9 @@ const Reserve1 = ({ hotelId, userId, email }) => {
   //   PriceByRoom: "",
   // };
 
+
+
+
   const selectRooms = {
     roomId: "",
     roomTypeId: "",
@@ -136,64 +131,63 @@ const Reserve1 = ({ hotelId, userId, email }) => {
     setArrSelect(newArrSelect);
 
   }
+  // Hàm định dạng số có hai chữ số (ví dụ: 1 -> 01)
+  const padZero = (num) => (num < 10 ? '0' : '') + num;
 
 
+  // Hàm để lưu giá trị dates[0].startDate1 và dates[0].endDate vào localStorage
+  function saveStartDate() {
+    let startDateStr = dates[0]?.startDate;
+    let endDateStr = dates[0]?.endDate;
 
+    let startDateObj = new Date(startDateStr);
+    let endDateObj = new Date(endDateStr);
 
+    let formatDate = (dateObj) => {
+      let day = padZero(dateObj.getUTCDate());
+      let month = padZero(dateObj.getUTCMonth() + 1); // Tháng bắt đầu từ 0
+      let year = dateObj.getUTCFullYear();
+      let hours = padZero(dateObj.getUTCHours());
+      let minutes = padZero(dateObj.getUTCMinutes());
+      let seconds = padZero(dateObj.getUTCSeconds());
+      return `${day}-${month}-${year} ${hours}:${minutes}:${seconds}`;
+    };
 
+    let formattedStartDate = formatDate(startDateObj);
+    let formattedEndDate = formatDate(endDateObj);
 
-  //////////////////////// ngay thang nam
-  const getDatesInRange = (startDate, endDate) => {
-    const start = new Date(startDate);
-    const end = new Date(endDate);
+    // Lưu giá trị vào localStorage
+    localStorage.setItem('savedStartDate', formattedStartDate);
+    localStorage.setItem('savedEndDate', formattedEndDate);
 
-    const date = new Date(start.getTime());
+    // console.log("Saved start date:", formattedStartDate);
+    // console.log("Saved end date:", formattedEndDate);
+  }
 
-    const dates = [];
+  // Hàm để lấy giá trị từ localStorage khi tải lại trang
+  function loadStartDate() {
+    let savedStartDate = localStorage.getItem('savedStartDate');
+    let savedEndDate = localStorage.getItem('savedEndDate');
 
-    while (date <= end) {
-      dates.push(new Date(date).getTime());
-      date.setDate(date.getDate() + 1);
+    if (savedStartDate) {
+      setStartDate(savedStartDate);
+      // console.log("Loaded start date from localStorage:", savedStartDate);
+    } else {
+      console.log("No saved start date found in localStorage.");
+    }
+
+    if (savedEndDate) {
+      setEndDate(savedEndDate);
+      // console.log("Loaded end date from localStorage:", savedEndDate);
+    } else {
+      console.log("No saved end date found in localStorage.");
     }
 
 
-    return dates;
-  };
+  }
 
-  // const alldates = getDatesInRange(dates[0].startDate, dates[0].endDate);
-  const startDate = new Date('2024-04-20');
-  const endDate = new Date('2024-04-23');
-  const alldates = getDatesInRange(startDate, endDate);
-
-  const isAvailable = (reservation) => {
-    const reservationStartDate = new Date(reservation.startDate);
-    const reservationEndDate = new Date(reservation.endDate);
-
-    for (let currentDate = reservationStartDate; currentDate <= reservationEndDate; currentDate.setDate(currentDate.getDate() + 1)) {
-      if (alldates.includes(currentDate.getTime())) {
-        return false; // Ngày đã được đặt phòng
-      }
-    }
-
-    return true; // Không có ngày nào đã được đặt phòng trong khoảng thời gian đặt phòng này
-  };
-
-
-
-
-
-  const defaultReservationDetailData = {
-    userId: 1, // ID của người dùng
-    reservationId: "",
-    startDate: '2024-06-01',
-    endDate: '2024-06-05',
-
-    bookingDetails: [] // Mảng chứa các chi tiết đặt phòng
-  };
-
-  const [reservationDetailData, setReservationDetailData] = useState(defaultReservationDetailData);
-
-  const defaultReservation = {
+  const [reservationDetailData, setReservationDetailData] = useState(null);
+  const [reservation, setReservation] = useState({
     userId: userId,
     hotelId: hotelId,
     roomCount: "",
@@ -202,29 +196,54 @@ const Reserve1 = ({ hotelId, userId, email }) => {
     discountPercent: "",
     description: "",
     isPayment: "",
-    startDate: startDate,
+    startDate: startDate1,
     endDate: endDate,
     reservationDate: "",
-
     name: "",
     address: "",
     phoneNumber: "",
-    email:email,
-  };
+    email: email,
+  });
+  const [reservation111, setReservation111] = useState('8888');
+  useEffect(() => {
+    if (startDate1 && endDate) {
+      const defaultReservationDetailData = {
+        userId: 9, // ID của người dùng
+        reservationId: "11",
+        startDate: startDate1,
+        endDate: endDate,
+        bookingDetails: [] // Mảng chứa các chi tiết đặt phòng
+      };
 
-  const [reservation, setReservation] = useState(defaultReservation);
+
+
+      setReservationDetailData(defaultReservationDetailData);
+      // console.log(`vao day: `, defaultReservation)
+      // setReservation(defaultReservation);
+
+      console.log("defaultReservationDetailData:", defaultReservationDetailData);
+      // console.log("defaultReservation:", defaultReservation);
+    }
+  }, [startDate1, endDate, userId, hotelId, email]); // Đảm bảo các dependency cần thiết
+
+
+  const handleOnChangeInput = (value, name) => {
+    let _reserveData = _.cloneDeep(reservationData);
+    _reserveData[name] = value;
+    setReservationData(_reserveData);
+  };
 
   const handleSelectRoomChange = async (value) => {
     let reservationId = await getMaxIdReservation();
-    console.log(">>>check max id1", reservationId.DT + 1);
+    // console.log(">>>check max id1", reservationId.DT + 1);
     setReservationDetailData(prevState => ({
       ...prevState,
       reservationId: reservationId.DT + 1// Assuming reservationId.DT contains the new reservation ID
     }));
-    console.log(">>>check max id2", reservationDetailData.reservationId);
+    // console.log(">>>check max id2", reservationDetailData.reservationId);
     if (value) {
       const [selectedCountRoom, roomTypeId, totalPrice] = value.split('-');
-      console.log(">>check roomchang var: ", selectedCountRoom, roomTypeId, totalPrice);
+      // console.log(">>check roomchang var: ", selectedCountRoom, roomTypeId, totalPrice);
 
       const newBookingDetail = {
         roomTypeId: parseInt(roomTypeId),
@@ -263,17 +282,18 @@ const Reserve1 = ({ hotelId, userId, email }) => {
 
   };
 
-
+  const [totalRoom1, setTotalRoom] = useState('ppp');
+  const [totalPrice, setTotalPrice] = useState(0);
 
   const saveReservationDetails = async () => {
+    let totalRoom = 0;
+    let totalPrice = 0;
     try {
+      console.log(">>check :", reservationDetailData);
       const reservationId = await getMaxIdReservation();
-      let totalRoom = 0;
-      let totalPrice = 0;
       for (const detail of reservationDetailData.bookingDetails) {
         const { roomTypeId, selectedRooms, PriceByRoom } = detail;
         totalRoom += selectedRooms;
-
         const roomData = await fetchRoom_By_RoomType(roomTypeId);
         if (roomData.EC !== 0) {
           console.error(roomData.EM);
@@ -303,18 +323,24 @@ const Reserve1 = ({ hotelId, userId, email }) => {
         }
       }
 
-      setReservation(prev => ({ ...prev, roomCount: totalRoom, totalPrice: totalPrice }));
-      console.log("Total rooms reserved:", totalRoom);
+      // setReservation(prev => {
+      //   prev.roomCount = totalRoom
+      //   prev.totalPrice = totalPrice
+      //   return prev
+      // });
+      // console.log(">>>>check re: ", reservation, totalRoom, totalPrice)
+
     } catch (error) {
       console.error('Error saving reservation details:', error);
     }
+
   };
 
-
-
-
-
-
+  useEffect(() => {
+    console.log('Updated reservation:', reservation);
+    setReservation111("90909");
+    console.log("Updating reservation: llllllllllllllllllll", totalRoom1);
+  }, [reservation, totalRoom1]);
 
   const history = useHistory();
 
@@ -322,27 +348,30 @@ const Reserve1 = ({ hotelId, userId, email }) => {
 
   };
 
+  const handleConfirmReservation = () => {
+    if (!userId) {
+      //  event.preventDefault(); // Ngăn chặn hành động mặc định của liên kết
+      history.push('/login');
+    } else {
 
+      // await saveReservationDetails();
+      setReservation(prev => ({
+        ...prev,
+        roomCount: 1,
+        totalPrice: 2
+      }));
+      setTotalPrice(100)
 
-
-  const handleConfirmReservation = async () => {
-    if (userId) {
-      await saveReservationDetails();
+      console.log("set revervation ", reservation)
       // await createNewReservation(reservation);
 
-      toast.success('Reservation confirmed!');
-    } else {
-      history.push('/login');
+      toast.success('Reservation confirmed!  okok');
     }
   };
 
 
-  const handleOnChangeInput = (value, name) => {
-    let _reserveData = _.cloneDeep(reservationData);
-    _reserveData[name] = value;
-    setReservationData(_reserveData);
-  };
 
+  console.log("render revervation ", reservation)
   return (
 
     <div className="reserveContainer">
@@ -436,17 +465,11 @@ const Reserve1 = ({ hotelId, userId, email }) => {
         <Link to="/reservation">Reserve Now!</Link>
       </div> */}
 
-      <Link
-        to={{
-          pathname: "/reservation",
-          state: {
-            reservation,
-          }
-        }}
+      <button
         onClick={handleConfirmReservation}
       >
         Reserve Now!
-      </Link>
+      </button>
     </div>
 
   );

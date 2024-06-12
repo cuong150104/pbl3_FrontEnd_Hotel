@@ -11,13 +11,15 @@ const PropertyList = () => {
     "https://cf.bstatic.com/static/img/theme-index/carousel_320x240/card-image-villas_300/dd0d7f8202676306a661aa4f0cf1ffab31286211.jpg",
     "https://cf.bstatic.com/static/img/theme-index/carousel_320x240/card-image-chalet_300/8ee014fcc493cb3334e25893a1dee8c6d36ed0ba.jpg",
   ];
+  const types = ["hotel", "apartment", "resort", "villa", "chalet", "homestay", "nha nghi"];
+  const count = ["4","777","23","456","55"];
   return (
     <div className="pList">
       {loading ? (
         "loading"
       ) : (
         <>
-          {data &&
+          {
             images.map((img,i) => (
               <div className="pListItem" key={i}>
                 <img
@@ -26,13 +28,15 @@ const PropertyList = () => {
                   className="pListImg"
                 />
                 <div className="pListTitles">
-                  <h1>{data[i]?.type}</h1>
-                  <h2>{data[i]?.count} {data[i]?.type}</h2>
+                   <h1>{img[i]?.type}</h1> 
+                  {/* <h2>{data[i]?.count} {data[i]?.type}</h2> */}
+                <h2>{count[i]} {types[i]}</h2> 
                 </div>
               </div>
             ))}
         </>
-      )}
+      )
+      }
     </div>
   );
 };

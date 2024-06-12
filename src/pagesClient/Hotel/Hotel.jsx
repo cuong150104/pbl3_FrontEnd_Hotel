@@ -19,26 +19,25 @@ import Reserve from "../../components/Client/Reserve/Reserve";
 
 const Hotel = () => {
   const location = useLocation();
-  const id = location.pathname.split("/")[2];
+  const idhotel = location.pathname.split("/")[2];
   const [slideNumber, setSlideNumber] = useState(0);
   const [open, setOpen] = useState(false);
   const [openModal, setOpenModal] = useState(false);
 
-  const { data, loading, error } = useFetch(`/api/v1/hotels/find/${id}`);
+  const { data, loading, error } = useFetch(`/api/v1/hotels/find/${idhotel}`);
   const { user } = useContext(UserContext);
-  
-  // console.log(">> check user: ", user.account.userId);
+
+  // console.log(">> check user: ", user.account.groupWithRoles.id  );
 
   const history = useHistory();
   const searchContextValue = useContext(searchContext);
-  let dates, options;
 
   const [hotelId, setHotelId] = useState(0);
 
 
   // console.log(">>check dates: ", dates);
 
-  //const { dates, options } = useContext(searchContext);
+  const { dates, options } = useContext(searchContext);
   // console.log(">>check data hotel", data);
 
   // const { state } = useContext(searchContext);
@@ -49,9 +48,13 @@ const Hotel = () => {
     const diffDays = Math.ceil(timeDiff / MILLISECONDS_PER_DAY);
     return diffDays;
   }
+  try {
+    const days = dayDifference(dates[0].endDate, dates[0].startDate);
+    // console.log("check day o hotel: ", dates);
 
-  //  const days = dayDifference(dates[0].endDate, dates[0].startDate);
-  // const [day, setday] = useState(days);
+  } catch (err) {
+
+  }
   const handleOpen = (i) => {
     setSlideNumber(i);
     setOpen(true);
@@ -89,7 +92,7 @@ const Hotel = () => {
         "loading"
       ) : (
         <div className="hotelContainer">
-           
+
           <div className="hotelWrapper">
             <button className="bookNow">Reserve or Book Now!</button>
             <h1 className="hotelTitle">{data.name}</h1>
@@ -105,7 +108,7 @@ const Hotel = () => {
               free airport taxi
             </span>
 
-           
+
             <div className="hotelImages row">
               {data.photos &&
                 JSON.parse(data.photos).map((photo, i) => (
@@ -144,10 +147,16 @@ const Hotel = () => {
                 <button onClick={handleClick}>Reserve or Book Now!</button>
               </div>
             </div>
-         
+
 
           </div>
-          <Reserve hotelId={id} userId={user.account.userId} email = {user.account.email}/>
+
+          <Reserve
+            hotelId={idhotel}
+            userId={user.account && user.account.groupWithRoles ? user.account.groupWithRoles.id : null}
+            email={user.account ? user.account.email : ''}
+            day={dates}
+          />
           <MailList />
           <Footer />
 

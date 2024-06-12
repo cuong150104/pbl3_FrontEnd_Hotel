@@ -1,70 +1,124 @@
-# Getting Started with Create React App
+# Project Title: Xây dựng website tổng hợp, quản lý khách sạn
+<h1>Project Title: Xây dựng website tổng hợp, quản lý khách sạn</h1>
+# Project Title: Xây dựng website tổng hợp, quản lý khách sạn
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### Overview
+This project involves developing a comprehensive website for hotel management, providing a platform for customers to easily access and book rooms while optimizing the hotel's management processes. The website aims to enhance customer experience, streamline hotel operations, and improve competitive capabilities.
 
-## Available Scripts
+### Team Members
+- Nguyễn Đức Cường (Student ID: 102220311)
+- Hoàng Đăng Khôi (Student ID: 102220324)
 
-In the project directory, you can run:
+### Supervisor
+- PGS.TS. Nguyễn Tấn Khôi
 
-### `npm start`
+### Institution
+- Đại học Đà Nẵng, Trường Đại học Bách Khoa
+- Faculty of Information Technology
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### Table of Contents
+1. [Introduction](#introduction)
+2. [Objectives and Significance](#objectives-and-significance)
+3. [Methodology](#methodology)
+4. [System Design and Analysis](#system-design-and-analysis)
+5. [Implementation and Results](#implementation-and-results)
+6. [Conclusion and Future Work](#conclusion-and-future-work)
+7. [References](#references)
+8. [Appendix](#appendix)
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Introduction
+The introduction provides an overview of the project, highlighting its necessity and the key issues it aims to address. In the digital era, automating management processes and enhancing customer experience through technology is essential in the hospitality industry.
 
-### `npm test`
+## Objectives and Significance
+### Objectives
+1. Improve customer experience:
+   - Provide a convenient online booking system.
+   - Ensure transparency in room information, pricing, and services.
+   - Support customers through online channels.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+2. Optimize hotel management:
+   - Automate room status and pricing updates.
+   - Manage customer information and booking history.
+   - Integrate secure and efficient payment methods.
 
-### `npm run build`
+3. Enhance competitive capabilities:
+   - Build a professional and attractive website.
+   - Use the website for marketing and promotional campaigns.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+4. Support strategic decision-making:
+   - Provide detailed business and occupancy reports.
+   - Analyze data to predict trends and adjust strategies.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+5. Ensure security and privacy:
+   - Protect customer personal and payment information.
+   - Implement cybersecurity measures to safeguard the system.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Significance
+- Enhance customer satisfaction and loyalty by making room booking and information access easier.
+- Reduce errors, save time, and costs through automated management processes.
+- Strengthen market position by providing a modern online platform to attract potential customers.
+- Aid management in making accurate and timely decisions with detailed data and reports.
+- Build trust and reputation by ensuring data security and privacy.
 
-### `npm run eject`
+## Methodology
+The methodology section outlines the steps and processes followed to achieve the project's objectives, including research, system design, implementation, testing, and evaluation.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## System Design and Analysis
+### Problem Statement
+- Functional requirements for a hotel management website include user login/logout, viewing, editing, deleting, updating, adding new entries, searching, sorting, and listing data.
+- Output includes displaying corresponding object lists, managing customer data for hotel owners, booking and canceling rooms for customers, and storing data in the database.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### System Design
+- Analyzing current status and requirements.
+- Designing system components, including diagrams such as class diagrams and use case diagrams.
+- Utilizing technologies such as Visual Code Studio, XAMPP, Github, draw.io, HTML, CSS, Javascript, Reactjs, SCSS, Nodejs, MySQL, and JWT for implementation.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### Database Design
+- Structuring database models to manage hotel and room information, user roles, booking details, and other relevant data.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+### Program Organization
+- Organizing the project into backend and frontend components:
+  - Backend: pbl3_BackEnd_Hotel-main
+  - Frontend: pbl3_FrontEnd_Hotel-main
 
-## Learn More
+## Implementation and Results
+### Deployment Model
+- Using the MVC (Model-View-Controller) architecture for development.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+![MVC Model](images/mvc_model.png)
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Tools and Configuration
+- Detailed description of the tools and configuration used for the development and deployment of the website.
 
-### Code Splitting
+### Experimental Results
+- Testing various scenarios such as system login, data entry/view, search and statistics functions, and query/report functions.
+- Evaluation of the system's performance and user feedback.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+![Login Interface](images/login_interface.png)
+*Figure 1: Login Interface*
 
-### Analyzing the Bundle Size
+![Main Interface](images/main_interface.png)
+*Figure 2: Main Interface for Users*
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+### Feedback and Evaluation
+- Summary of the experimental results, highlighting the successful aspects and areas for improvement.
 
-### Making a Progressive Web App
+## Conclusion and Future Work
+### Achievements
+- The project achieved significant milestones in terms of both theoretical understanding and practical application.
+- Key contributions include developing a faster algorithm, building effective system components, and identifying key challenges.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### Recommendations and Future Work
+- Address security issues and enhance features to meet real-world applications.
+- Incorporate AI suggestions for hotel recommendations and map integration.
+- Improve user interface and interactivity to optimize user experience.
 
-### Advanced Configuration
+## References
+- List of references used in the project, including academic papers, books, and online resources.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+## Appendix
+- Additional materials such as source code snippets, sample data, diagrams, and other supporting documents.
 
-### Deployment
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+This README file provides a comprehensive overview of the project, detailing the objectives, methodology, system design, implementation, results, and future directions. It serves as a guide for understanding the project's scope and contributions.
