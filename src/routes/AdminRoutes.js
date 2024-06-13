@@ -27,13 +27,15 @@ const AppRoutes = (props) => {
         <PrivateRoutes path="/bookings" component={BookingList} />
         <PrivateRoutes path="/statistics" component={Statistics} />
 
+        <Route path="/" exact>
+          <Admin />
+        </Route>
+        
         <Route path="/admin" exact>
           <Admin />
         </Route>
 
-        <Route path="*">
-          <NotFound />
-        </Route>
+        <Route path="*">404 Not Found</Route>
       </Switch>
     </>
   );

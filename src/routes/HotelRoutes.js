@@ -6,16 +6,22 @@ import ListRoom from "../components/Admin/ManageRooms/ListRoom";
 import BookingList from "../components/Admin/BookingManager/BookingList";
 import BookingDetail from "../components/Admin/BookingDetail/BookingDetail";
 import Statistics from "../components/Admin/Statistics/Statistics";
+import Customer from "../components/Customer/customer";
 const CompanyRoutes = () => {
   return (
     <Switch>
       <PrivateRoutes path="/hotels/:hotelId/rooms" component={ListRoom} />
       <PrivateRoutes path="/hotels" component={Hotels} />
       <PrivateRoutes path="/bookings/:bookingId" component={BookingDetail} />
-        <PrivateRoutes path="/bookings" component={BookingList} />
-        <PrivateRoutes path="/statistics" component={Statistics} />
+      <PrivateRoutes path="/bookings" component={BookingList} />
+      <PrivateRoutes path="/statistics" component={Statistics} />
+
+      <Route path="/" exact>
+        <Customer />
+      </Route>
       <Route path="*">
-        <NotFound />
+        {/* <NotFound /> */}
+        <Customer />
       </Route>
     </Switch>
   );

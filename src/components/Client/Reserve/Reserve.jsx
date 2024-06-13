@@ -7,78 +7,31 @@ import { useEffect, useContext, useState } from "react";
 import { searchContext } from "../../../context/searchContext";
 import axios from "axios";
 import { useHistory, Link } from "react-router-dom";
-
 import React from 'react';
-// import _ from "lodash";
-import {
-  createNewReservation
-} from "../../../servises/reservationService"
-import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import { toast } from "react-toastify";
 import _, { cloneDeep } from "lodash";
-
-
 import { fetchRoomTypeByHotel } from "../../../servises/room_TypeServises";
 import { fetchRoom_By_RoomType } from "../../../servises/roomServises";
 import { getMaxIdReservation } from "../../../servises/reservationService";
 import { createNewReservationDetail } from "../../../servises/reservationDetailService";
-
-const Reserve1 = ({ hotelId, userId, email }) => {
+import { fetchDateHotel } from "../../../servises/hotelService";
+const Reserve1 = ({ hotelId, userId, email, nameHotel }) => {
   const { data } = useFetch(`/api/v1/hotels/room/${hotelId}`);
   const { dates } = useContext(searchContext);
 
   // console.log("check dateeeee: ", dates);
-  // console.log("check dateeeee  start: ", dates[0]?.startDate);
-  // console.log("check dateeeee  start: ", dates[0].endDate);
-  const defaultReservationData = {
-    userId: userId,
-    hotelId: hotelId,
-    roomCount: "",
-    totalPrice: "",
-    reservationStatus: "",
-    discountPercent: "",
-    description: "",
-    isPayment: "",
-    startDate: "",
-    endDate: "",
-    reservationDate: "",
-  };
-
-  const validInputsDefault = {
-    roomCount: true,
-  };
-
-  const [reservationData, setReservationData] = useState(defaultReservationData);
-  const [validInputs, setValidInputs] = useState(validInputsDefault);
-  const [startDate1, setStartDate] = useState('');
-  const [endDate, setEndDate] = useState('');
-  const [alldates, setAllDates] = useState([]);
-
-  useEffect(() => {
-    saveStartDate();
-    loadStartDate();
-  }, []);
-
-  useEffect(() => {
-    getRoomTypeByHotel();
-    handleSelectRooms();
-    getRoom_By_TypeRoom();
-
-  }, []);
+  console.log("check dateeeee  start: ", dates[0]?.startDate);
+  console.log("check dateeeee  start: ", dates[0]?.endDate);
 
   const [ListRoomTypeByHotel, setListRoomTypeByHotel] = useState([]);
-  const [roomTypeId, setRoomTypeId] = useState([0]);
 
   const getRoomTypeByHotel = async () => {
     let data = await fetchRoomTypeByHotel(hotelId);
     if (data && +data.EC === 0) {
-
       setListRoomTypeByHotel(data.DT);
-      // setRoomTypeId(data.DT.id);
     }
   }
-
 
   const [Room_By_TypeRoom, setRoom_By_TypeRoom] = useState([]);
   const getRoom_By_TypeRoom = async (roomTypeId) => {
@@ -91,19 +44,6 @@ const Reserve1 = ({ hotelId, userId, email }) => {
     return null;
   }
 
-
-
-
-
-  // const defaultReservationDetailData = {
-  //   roomId: "",
-  //   selectedRooms: "",
-  //   PriceByRoom: "",
-  // };
-
-
-
-
   const selectRooms = {
     roomId: "",
     roomTypeId: "",
@@ -115,7 +55,6 @@ const Reserve1 = ({ hotelId, userId, email }) => {
     price: "",
   };
 
-  // const [reservationDetailData, setReservationDetailData] = useState(defaultReservationDetailData);
   const [arrSelect, setArrSelect] = useState([]);
   const handleSelectRooms = () => {
     for (let i = 0; i < ListRoomTypeByHotel.length; i++) {
@@ -134,8 +73,17 @@ const Reserve1 = ({ hotelId, userId, email }) => {
   // Hàm định dạng số có hai chữ số (ví dụ: 1 -> 01)
   const padZero = (num) => (num < 10 ? '0' : '') + num;
 
+  const [startDate, setStartDate] = useState('');
+  const [endDate, setEndDate] = useState('');
+  useEffect(() => {
+    getRoomTypeByHotel();
+    handleSelectRooms();
+    getRoom_By_TypeRoom();
+    saveStartDate();
+    loadStartDate();
+  }, []);
 
-  // Hàm để lưu giá trị dates[0].startDate1 và dates[0].endDate vào localStorage
+  // Hàm để lưu giá trị dates[0].startDate và dates[0].endDate vào localStorage
   function saveStartDate() {
     let startDateStr = dates[0]?.startDate;
     let endDateStr = dates[0]?.endDate;
@@ -144,13 +92,15 @@ const Reserve1 = ({ hotelId, userId, email }) => {
     let endDateObj = new Date(endDateStr);
 
     let formatDate = (dateObj) => {
-      let day = padZero(dateObj.getUTCDate());
-      let month = padZero(dateObj.getUTCMonth() + 1); // Tháng bắt đầu từ 0
-      let year = dateObj.getUTCFullYear();
-      let hours = padZero(dateObj.getUTCHours());
-      let minutes = padZero(dateObj.getUTCMinutes());
-      let seconds = padZero(dateObj.getUTCSeconds());
-      return `${day}-${month}-${year} ${hours}:${minutes}:${seconds}`;
+      let padZero = (num) => num.toString().padStart(2, '0');
+
+      let day = padZero(dateObj.getDate());
+      let month = padZero(dateObj.getMonth() + 1); // Months start from 0
+      let year = dateObj.getFullYear();
+      let hours = padZero(dateObj.getHours());
+      let minutes = padZero(dateObj.getMinutes());
+      let seconds = padZero(dateObj.getSeconds());
+      return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
     };
 
     let formattedStartDate = formatDate(startDateObj);
@@ -160,8 +110,8 @@ const Reserve1 = ({ hotelId, userId, email }) => {
     localStorage.setItem('savedStartDate', formattedStartDate);
     localStorage.setItem('savedEndDate', formattedEndDate);
 
-    // console.log("Saved start date:", formattedStartDate);
-    // console.log("Saved end date:", formattedEndDate);
+    console.log(">>>>>>>>>>>>>>>>Saved start date:", formattedStartDate);
+    console.log("Saved end date:", formattedEndDate);
   }
 
   // Hàm để lấy giá trị từ localStorage khi tải lại trang
@@ -171,80 +121,91 @@ const Reserve1 = ({ hotelId, userId, email }) => {
 
     if (savedStartDate) {
       setStartDate(savedStartDate);
-      // console.log("Loaded start date from localStorage:", savedStartDate);
+      console.log("Loaded start date from localStorage:", savedStartDate);
     } else {
       console.log("No saved start date found in localStorage.");
     }
 
     if (savedEndDate) {
       setEndDate(savedEndDate);
-      // console.log("Loaded end date from localStorage:", savedEndDate);
+      console.log("Loaded end date from localStorage:", savedEndDate);
     } else {
       console.log("No saved end date found in localStorage.");
     }
-
-
   }
 
+  // Function to calculate the difference in days between two dates
+  function calculateDaysBetweenDates(startDate, endDate) {
+    // Ensure both dates are Date objects
+    if (!(startDate instanceof Date) && typeof startDate === 'string') {
+      startDate = new Date(startDate);
+    }
+    if (!(endDate instanceof Date) && typeof endDate === 'string') {
+      endDate = new Date(endDate);
+    }
+
+    // Check if dates are valid
+    if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
+      return 'Invalid date(s) provided';
+    }
+
+    const oneDay = 1000 * 60 * 60 * 24; // milliseconds in one day
+    const differenceInTime = endDate.getTime() - startDate.getTime();
+    const differenceInDays = Math.ceil(differenceInTime / oneDay);
+    return differenceInDays;
+  }
+
+
+      const daysBetween = calculateDaysBetweenDates(startDate, endDate);
+     
+ console.log(">>check day", daysBetween);
+
   const [reservationDetailData, setReservationDetailData] = useState(null);
-  const [reservation, setReservation] = useState({
-    userId: userId,
-    hotelId: hotelId,
-    roomCount: "",
-    totalPrice: "",
-    reservationStatus: "",
-    discountPercent: "",
-    description: "",
-    isPayment: "",
-    startDate: startDate1,
-    endDate: endDate,
-    reservationDate: "",
-    name: "",
-    address: "",
-    phoneNumber: "",
-    email: email,
-  });
-  const [reservation111, setReservation111] = useState('8888');
+  const [reservation, setReservation] = useState(null);
   useEffect(() => {
-    if (startDate1 && endDate) {
+    if (startDate && endDate) {
       const defaultReservationDetailData = {
         userId: 9, // ID của người dùng
         reservationId: "11",
-        startDate: startDate1,
+        startDate: startDate,
         endDate: endDate,
         bookingDetails: [] // Mảng chứa các chi tiết đặt phòng
       };
 
-
+      const defaultReservation = {
+        userId: userId,
+        hotelId: hotelId,
+        totalRoom: "",
+        totalPrice: "",
+        reservationStatus: "",
+        discountPercent: "",
+        description: "",
+        isPayment: "",
+        startDate: startDate,
+        endDate: endDate,
+        reservationDate: "",
+        nameHotel: nameHotel,
+        name: "",
+        address: "",
+        phoneNumber: "",
+        email: email,
+      };
 
       setReservationDetailData(defaultReservationDetailData);
-      // console.log(`vao day: `, defaultReservation)
-      // setReservation(defaultReservation);
+      setReservation(defaultReservation);
 
-      console.log("defaultReservationDetailData:", defaultReservationDetailData);
-      // console.log("defaultReservation:", defaultReservation);
     }
-  }, [startDate1, endDate, userId, hotelId, email]); // Đảm bảo các dependency cần thiết
+  }, [startDate, endDate, userId, hotelId, email]); // Đảm bảo các dependency cần thiết
 
-
-  const handleOnChangeInput = (value, name) => {
-    let _reserveData = _.cloneDeep(reservationData);
-    _reserveData[name] = value;
-    setReservationData(_reserveData);
-  };
 
   const handleSelectRoomChange = async (value) => {
     let reservationId = await getMaxIdReservation();
-    // console.log(">>>check max id1", reservationId.DT + 1);
     setReservationDetailData(prevState => ({
       ...prevState,
       reservationId: reservationId.DT + 1// Assuming reservationId.DT contains the new reservation ID
     }));
-    // console.log(">>>check max id2", reservationDetailData.reservationId);
     if (value) {
       const [selectedCountRoom, roomTypeId, totalPrice] = value.split('-');
-      // console.log(">>check roomchang var: ", selectedCountRoom, roomTypeId, totalPrice);
-
       const newBookingDetail = {
         roomTypeId: parseInt(roomTypeId),
         selectedRooms: parseInt(selectedCountRoom),
@@ -282,9 +243,6 @@ const Reserve1 = ({ hotelId, userId, email }) => {
 
   };
 
-  const [totalRoom1, setTotalRoom] = useState('ppp');
-  const [totalPrice, setTotalPrice] = useState(0);
-
   const saveReservationDetails = async () => {
     let totalRoom = 0;
     let totalPrice = 0;
@@ -294,6 +252,8 @@ const Reserve1 = ({ hotelId, userId, email }) => {
       for (const detail of reservationDetailData.bookingDetails) {
         const { roomTypeId, selectedRooms, PriceByRoom } = detail;
         totalRoom += selectedRooms;
+
+
         const roomData = await fetchRoom_By_RoomType(roomTypeId);
         if (roomData.EC !== 0) {
           console.error(roomData.EM);
@@ -311,71 +271,62 @@ const Reserve1 = ({ hotelId, userId, email }) => {
             console.log("Not enough available rooms to fulfill the reservation request.");
             break;
           }
-          const roomIdSelected = availableRooms[i].id;
           totalPrice += PriceByRoom;
+          const totalPriceBYday = totalPrice * (daysBetween+1);
+          console.log(">>check tien: ", totalPriceBYday);
+          console.log(">>check tien: ", daysBetween+1);
           await createNewReservationDetail({
-            roomId: roomIdSelected,
+            roomId: availableRooms[i].id,
             reservationId: reservationDetailData.reservationId,
-            price: PriceByRoom,
+            price:PriceByRoom,
             startDate: reservationDetailData.startDate,
             endDate: reservationDetailData.endDate
           });
         }
       }
 
-      // setReservation(prev => {
-      //   prev.roomCount = totalRoom
-      //   prev.totalPrice = totalPrice
-      //   return prev
-      // });
-      // console.log(">>>>check re: ", reservation, totalRoom, totalPrice)
+      const updatedReservation = {
+        ...reservation, // assuming this is your current reservation state
+        totalRoom: totalRoom,
+        totalPrice:  totalPrice * (daysBetween+1),
+      };
+
+      setReservation(updatedReservation);
+      return updatedReservation;
 
     } catch (error) {
       console.error('Error saving reservation details:', error);
     }
-
   };
 
-  useEffect(() => {
-    console.log('Updated reservation:', reservation);
-    setReservation111("90909");
-    console.log("Updating reservation: llllllllllllllllllll", totalRoom1);
-  }, [reservation, totalRoom1]);
+
+  console.log("render reservation", reservation);
 
   const history = useHistory();
-
-  const handleClick = async () => {
-
-  };
-
-  const handleConfirmReservation = () => {
+  const handleConfirmReservation = async () => {
     if (!userId) {
-      //  event.preventDefault(); // Ngăn chặn hành động mặc định của liên kết
-      history.push('/login');
+      history.push('/login');  // Redirects to login if userId is undefined or false
     } else {
-
-      // await saveReservationDetails();
-      setReservation(prev => ({
-        ...prev,
-        roomCount: 1,
-        totalPrice: 2
-      }));
-      setTotalPrice(100)
-
-      console.log("set revervation ", reservation)
-      // await createNewReservation(reservation);
-
-      toast.success('Reservation confirmed!  okok');
+      try {
+        const updatedReservation = await saveReservationDetails();
+        console.log("Reservation success:", updatedReservation);
+        if (updatedReservation) {
+          history.push('/reservation', { updatedReservation });
+        } else {
+          console.error('No reservation data to push');
+          toast.error('Reservation data is missing');
+        }
+        toast.success('Reservation confirmed!');
+      } catch (error) {
+        console.error('Failed to confirm reservation:', error);
+        toast.error('Failed to confirm reservation.');
+      }
     }
   };
 
-
-
-  console.log("render revervation ", reservation)
   return (
 
     <div className="reserveContainer">
-
       <div className="ReserveTable">
         <div className="ReserveWrapper">
           <table className="table table-bordered table-bordered-middle">
@@ -454,22 +405,9 @@ const Reserve1 = ({ hotelId, userId, email }) => {
           </table>
         </div>
       </div>
-
-      {/* <Button variant="primary"
-        onClick={() => handleConfirmReservation()}
-      >
+      <Button onClick={handleConfirmReservation}   >
         Reserve Now!
-
-      </Button> */}
-      {/* <div>
-        <Link to="/reservation">Reserve Now!</Link>
-      </div> */}
-
-      <button
-        onClick={handleConfirmReservation}
-      >
-        Reserve Now!
-      </button>
+      </Button>
     </div>
 
   );

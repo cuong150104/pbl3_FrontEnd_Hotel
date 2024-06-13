@@ -153,6 +153,7 @@ const Hotel = () => {
 
           <Reserve
             hotelId={idhotel}
+            nameHotel={data.name}
             userId={user.account && user.account.groupWithRoles ? user.account.groupWithRoles.id : null}
             email={user.account ? user.account.email : ''}
             day={dates}

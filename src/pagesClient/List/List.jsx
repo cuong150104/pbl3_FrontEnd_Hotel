@@ -34,7 +34,7 @@ const List = () => {
     } else if (cityFromUrl) {
       setDestination(cityFromUrl);
     }
-    console.log("City ===:", destination);
+    // console.log("City ===:", destination);
   }, [location.state, cityFromUrl, data]);
   const handleClick = () => {
     reFetch();
@@ -44,8 +44,8 @@ const List = () => {
   //     setDestination(location.state.destination );
   //   }
 
-  console.log("City:", destination);
-  console.log("Data list:", data);
+  // console.log("City:", destination);
+  // console.log("Data list:", data);
 
   return (
     <div>

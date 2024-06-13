@@ -51,23 +51,26 @@
 .hotelImages {
   display: flex;
   padding: 3px;
-  height: 40vw;
+  height: 35vw;
   width: 65%;
 }
 
 .hotelImages2 {
   margin: -10px;
+  padding-top: -10px;
 }
 
 .hotelImgWrapper {
-  width: 33%;
+  width: 35%;
 }
 
 .hotelImg {
   width: 100%;
   object-fit: cover;
   cursor: pointer;
-  max-height: 20vw;
+  max-height: 18vw;
+  
+
 
 
 }
@@ -78,7 +81,7 @@
 
 .hotelImages2 {
   flex: 1;
-  gap: 5px;
+  gap: 3px;
   display: flex;
   flex-direction: column;
   padding-bottom: 23px;

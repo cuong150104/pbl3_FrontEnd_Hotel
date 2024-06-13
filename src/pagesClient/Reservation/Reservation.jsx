@@ -2,23 +2,17 @@ import React, { useState, useContext } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
 import { UserContext } from '../../context/UserContext';
 import "./Reservation.scss";
-import { getMaxIdReservation } from "../../servises/reservationService";
-import { fetchRoom_By_RoomType } from "../../servises/roomServises";
-import { createNewReservationDetail } from "../../servises/reservationDetailService";
 import { useLocation } from 'react-router-dom';
-import {
-    createNewReservation
-} from "../../servises/reservationService";
+import {createNewReservation} from "../../servises/reservationService";
 import Button from "react-bootstrap/Button";
-import { useHistory, Link } from "react-router-dom";
-
+import { useHistory} from "react-router-dom";
 import { bookingMessage } from "../../servises/reservationService";
 const Reservation = () => {
     const { user } = useContext(UserContext);
     const location = useLocation();
     const history = useHistory();
-    const [formData, setFormData] = useState(location.state.reservation);
-    console.log("loi loi loi", formData);
+    const [formData, setFormData] = useState(location.state.updatedReservation);
+    console.log("loi loi loi", location.state.updatedReservation);
     const handleChange = (e) => {
         setFormData({
             ...formData,
@@ -44,28 +38,27 @@ const Reservation = () => {
         } catch (error) {
 
         }
-
         toast.success('Reservation confirmed!');
         history.push('/login');
-
     };
 
     const handBookingMessage = async () => {
         // if(formData.name && formData.phoneNumber && form.address)
         let data = {
-
             email: formData.email,
             name: formData.name,
             phoneNumber: formData.phoneNumber,
             address: formData.address,
             startDate: formData.startDate,
             endDate: formData.endDate,
+            nameHotel: formData.nameHotel,
+            totalRoom: formData.totalRoom,
+            totalPrice: formData.totalPrice,
         }
         console.log(">>>> check email, n", data);
 
         let response = await bookingMessage(data);
         if (response && response.EC === 0) {
-
             toast.success(response.EM);
         } else {
             toast.error(response.EM);
