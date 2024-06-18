@@ -1,124 +1,148 @@
 # Project Title: Xây dựng website tổng hợp, quản lý khách sạn
-<h1>Project Title: Xây dựng website tổng hợp, quản lý khách sạn</h1>
-# Project Title: Xây dựng website tổng hợp, quản lý khách sạn
 
-### Overview
+### Purpose of the project
 This project involves developing a comprehensive website for hotel management, providing a platform for customers to easily access and book rooms while optimizing the hotel's management processes. The website aims to enhance customer experience, streamline hotel operations, and improve competitive capabilities.
 
-### Team Members
-- Nguyễn Đức Cường (Student ID: 102220311)
-- Hoàng Đăng Khôi (Student ID: 102220324)
+## What to prepare
+Install mySQL, python, nodejs, reactjs,...
+### Technology used
+- Programming software: Visual Code Studio
 
-### Supervisor
-- PGS.TS. Nguyễn Tấn Khôi
+- Web server: XAMPP
 
-### Institution
-- Đại học Đà Nẵng, Trường Đại học Bách Khoa
-- Faculty of Information Technology
+- Source code management: Github
 
-### Table of Contents
-1. [Introduction](#introduction)
-2. [Objectives and Significance](#objectives-and-significance)
-3. [Methodology](#methodology)
-4. [System Design and Analysis](#system-design-and-analysis)
-5. [Implementation and Results](#implementation-and-results)
-6. [Conclusion and Future Work](#conclusion-and-future-work)
-7. [References](#references)
-8. [Appendix](#appendix)
+- Tool for designing object-oriented design and analysis diagrams: https://app.diagrams.net/
+- Front-end construction:
 
-## Introduction
-The introduction provides an overview of the project, highlighting its necessity and the key issues it aims to address. In the digital era, automating management processes and enhancing customer experience through technology is essential in the hospitality industry.
+- + Language: HTML, CSS, Javascript
 
-## Objectives and Significance
-### Objectives
-1. Improve customer experience:
-   - Provide a convenient online booking system.
-   - Ensure transparency in room information, pricing, and services.
-   - Support customers through online channels.
+- + Framework: Reactjs, SCSS
 
-2. Optimize hotel management:
-   - Automate room status and pricing updates.
-   - Manage customer information and booking history.
-   - Integrate secure and efficient payment methods.
+- Back-end construction:
 
-3. Enhance competitive capabilities:
-   - Build a professional and attractive website.
-   - Use the website for marketing and promotional campaigns.
+- + Language: Javascript
 
-4. Support strategic decision-making:
-   - Provide detailed business and occupancy reports.
-   - Analyze data to predict trends and adjust strategies.
+- + Framework: Nodejs
 
-5. Ensure security and privacy:
-   - Protect customer personal and payment information.
-   - Implement cybersecurity measures to safeguard the system.
+- Database design software: MySQL
 
-### Significance
-- Enhance customer satisfaction and loyalty by making room booking and information access easier.
-- Reduce errors, save time, and costs through automated management processes.
-- Strengthen market position by providing a modern online platform to attract potential customers.
-- Aid management in making accurate and timely decisions with detailed data and reports.
-- Build trust and reputation by ensuring data security and privacy.
+- Authentication and authorization: JWT
+## How to run
+After cloning the project and opening the solution file, you will see the project folder structure like this:
+![alt text](imge/image-3.png)
+model-controller
+![alt text](imge/image-4.png)
+View
+![alt text](imge/image-5.png)
+## Databases
+![alt text](imge/image-8.png)
+## Usecase diagram
+![alt text](imge/image-7.png)
 
-## Methodology
-The methodology section outlines the steps and processes followed to achieve the project's objectives, including research, system design, implementation, testing, and evaluation.
-
-## System Design and Analysis
-### Problem Statement
-- Functional requirements for a hotel management website include user login/logout, viewing, editing, deleting, updating, adding new entries, searching, sorting, and listing data.
-- Output includes displaying corresponding object lists, managing customer data for hotel owners, booking and canceling rooms for customers, and storing data in the database.
-
-### System Design
-- Analyzing current status and requirements.
-- Designing system components, including diagrams such as class diagrams and use case diagrams.
-- Utilizing technologies such as Visual Code Studio, XAMPP, Github, draw.io, HTML, CSS, Javascript, Reactjs, SCSS, Nodejs, MySQL, and JWT for implementation.
-
-### Database Design
-- Structuring database models to manage hotel and room information, user roles, booking details, and other relevant data.
-
-### Program Organization
-- Organizing the project into backend and frontend components:
-  - Backend: pbl3_BackEnd_Hotel-main
-  - Frontend: pbl3_FrontEnd_Hotel-main
-
-## Implementation and Results
-### Deployment Model
-- Using the MVC (Model-View-Controller) architecture for development.
-
-![MVC Model](images/mvc_model.png)
-
-### Tools and Configuration
-- Detailed description of the tools and configuration used for the development and deployment of the website.
-
-### Experimental Results
+## ALGORITHM ANALYSIS
+- Search and filtering algorithm
+- Proposed algorithm
+- Crawler algorithm
+## Features
+### Login function
+- Admin/User enters login name and password, the system will check the database and then respond to admin/user.
+- If there is no account with the corresponding login name and password, the system will report an error of incorrect login name or password.
+### Search - booking function
+- For clients:
+   + Enter personal information, then the system will retrieve the data and display appropriate search results
+   + Client can click on the desired result to see detailed information
+   + Fill in personal information and press the "Book" button to reserve a room
+### Management function
+- For admins:
+   + Add, delete, edit client/customer
+- For clients:
+   + Add, delete, edit personal information
+   + Add, delete, edit accounts
+   + Add, delete, edit booking orders
+- For customers:
+   + Add, delete, edit businesses
+   + Add, delete, edit customers
+   + Add, delete, edit booking orders
+## Program interface
 - Testing various scenarios such as system login, data entry/view, search and statistics functions, and query/report functions.
 - Evaluation of the system's performance and user feedback.
 
-![Login Interface](images/login_interface.png)
+### Scenario 1 – Login system
 *Figure 1: Login Interface*
+![alt text](imge/image-1.png)
 
-![Main Interface](images/main_interface.png)
-*Figure 2: Main Interface for Users*
+### Scenario 2 – Main interface for users
 
-### Feedback and Evaluation
-- Summary of the experimental results, highlighting the successful aspects and areas for improvement.
+1. Interface for Client
+*Figure 2: Main Interface for Client*
+![alt text](imge/image-2.png)
 
-## Conclusion and Future Work
-### Achievements
-- The project achieved significant milestones in terms of both theoretical understanding and practical application.
-- Key contributions include developing a faster algorithm, building effective system components, and identifying key challenges.
+2. Interface for Admin
+*Figure 3: Main Interface for Admin*
+![alt text](imge/image-9.png)
 
-### Recommendations and Future Work
-- Address security issues and enhance features to meet real-world applications.
-- Incorporate AI suggestions for hotel recommendations and map integration.
-- Improve user interface and interactivity to optimize user experience.
+3. Interface for Customer
+*Figure 4: Main Interface for Customer*
+![alt text](imge/image-10.png)
 
-## References
-- List of references used in the project, including academic papers, books, and online resources.
 
-## Appendix
-- Additional materials such as source code snippets, sample data, diagrams, and other supporting documents.
+### Scenario 3 – Search and statistics functions
 
----
+#### Interface for Client
+*Figure 5: Search interface*
+![alt text](imge/image-11.png)
 
-This README file provides a comprehensive overview of the project, detailing the objectives, methodology, system design, implementation, results, and future directions. It serves as a guide for understanding the project's scope and contributions.
+*Figure 6: Export search results*
+![alt text](imge/image-12.png)
+
+*Figure 7: View hotel booking information*
+![alt text](imge/image-13.png)
+![alt text](imge/image-14.png)
+
+*Figure 8: Fill in basic information to book a room*
+![alt text](imge/image-15.png)
+
+*Figure 9: Pay with momo*
+![alt text](imge/image-16.png)
+
+*Figure 10: Send booking results to email*
+![alt text](imge/image-17.png)
+
+#### Interface for Admin
+*Figure 11:User managementn*
+![alt text](imge/image-18.png)
+
+*Figure 12:add users*
+![alt text](imge/image-19.png)
+
+*Figure 13:Manage roles*
+![alt text](imge/image-20.png)
+
+*Figure 14:Manage group*
+![alt text](imge/image-21.png)
+
+*Figure 15: Hotel and room management*
+![alt text](imge/image-22.png)
+![alt text](imge/image-23.png)
+create room
+![alt text](imge/image-24.png)
+*Figure 16:Manage bookings*
+![alt text](imge/image-25.png)
+
+*Figure 17:Revenue statistics*
+![alt text](imge/image-26.png)
+
+
+### Interface for Customer
+*Figure 18: Hotel and room management*
+![alt text](imge/image-22.png)
+![alt text](imge/image-23.png)
+create room
+![alt text](imge/image-24.png)
+*Figure 19:Manage bookings*
+![alt text](imge/image-25.png)
+
+*Figure 20:Revenue statistics*
+![alt text](imge/image-26.png)
+
