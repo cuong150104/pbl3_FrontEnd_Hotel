@@ -1,4 +1,4 @@
-# Project Title: Xây dựng website tổng hợp, quản lý khách sạn
+# Project Title: Building a comprehensive website, hotel management
 
 ### Purpose of the project
 This project involves developing a comprehensive website for hotel management, providing a platform for customers to easily access and book rooms while optimizing the hotel's management processes. The website aims to enhance customer experience, streamline hotel operations, and improve competitive capabilities.
